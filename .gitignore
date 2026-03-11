@@ -7,3 +7,22 @@ venv/
 *.csv
 *.pkl
 mlruns/
+
+# DVC cache (stora filer som inte ska till Git)
+dvc_cache/
+.dvc/tmp/
+
+dvc_cache/
+.dvc/tmp/
+*.mdf
+*.ldf
+
+dvc_cache/
+.dvc/tmp/
+*.mdf
+*.ldf
+
+dvc_cache/
+.dvc/tmp/
+*.mdf
+*.ldf
