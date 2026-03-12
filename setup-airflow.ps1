@@ -276,7 +276,7 @@ docker-compose restart airflow-webserver airflow-scheduler airflow-worker
 Write-Host ""
 Write-Host "✅ KLART!" -ForegroundColor Green
 Write-Host "Starta resten: docker-compose up -d mlflow api" -ForegroundColor Yellow
-Write-Host "Öppna: http://localhost:8080 (admin/admin)" -ForegroundColor Yellow
+Write-Host "Öppna: http://localhost:8080/login (admin/admin)" -ForegroundColor Yellow
 '@
 Set-Content -Path "init-airflow-db.ps1" -Value $init -Encoding UTF8
 Write-Host "  ✅ init-airflow-db.ps1 skapad" -ForegroundColor Green
@@ -297,7 +297,7 @@ $readme = @"
 ## Kom igång
 1. .\init-airflow-db.ps1
 2. docker-compose up -d
-3. http://localhost:8080 (admin/admin)
+3. http://localhost:8080/login (admin/admin)
 "@
 Set-Content -Path "docs\AIRFLOW.md" -Value $readme -Encoding UTF8
 Write-Host "  ✅ docs/AIRFLOW.md skapad" -ForegroundColor Green
@@ -347,7 +347,7 @@ Write-Host ""
 Write-Host "📋 KÖR I ORDNING:" -ForegroundColor Yellow
 Write-Host "  1. .\init-airflow-db.ps1" -ForegroundColor White
 Write-Host "  2. docker-compose up -d" -ForegroundColor White
-Write-Host "  3. Öppna http://localhost:8080" -ForegroundColor White
+Write-Host "  3. Öppna http://localhost:8080/login" -ForegroundColor White
 Write-Host ""
 Write-Host "📋 OM DET INTE FUNGERAR:" -ForegroundColor Yellow
 Write-Host "  Kör .\fix-airflow.ps1" -ForegroundColor White

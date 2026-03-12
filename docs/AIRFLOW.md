@@ -7,4 +7,4 @@
 ## Kom igång
 1. .\init-airflow-db.ps1
 2. docker-compose up -d
-3. http://localhost:8080 (admin/admin)
+3. http://localhost:8080/login (admin/admin)

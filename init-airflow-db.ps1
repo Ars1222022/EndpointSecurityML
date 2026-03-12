@@ -54,4 +54,4 @@ docker-compose restart airflow-webserver airflow-scheduler airflow-worker
 Write-Host ""
 Write-Host "✅ KLART!" -ForegroundColor Green
 Write-Host "Starta resten: docker-compose up -d mlflow api" -ForegroundColor Yellow
-Write-Host "Öppna: http://localhost:8080 (admin/admin)" -ForegroundColor Yellow
+Write-Host "Öppna: http://localhost:8080/login (admin/admin)" -ForegroundColor Yellow
