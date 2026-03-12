@@ -1,9 +1,9 @@
 # =====================================================
-# setup-airflow.ps1 - KOMPLETT FIXAD VERSION
+# setup-airflow.ps1 - ULTIMATA VERSIONEN (FIXAR ALLT)
 # =====================================================
 
 Write-Host "==========================================================" -ForegroundColor Cyan
-Write-Host "⏰ APACHE AIRFLOW - KOMPLETT SETUP" -ForegroundColor Cyan
+Write-Host "⏰ APACHE AIRFLOW - ULTIMATA SETUP" -ForegroundColor Cyan
 Write-Host "==========================================================" -ForegroundColor Cyan
 Write-Host ""
 
@@ -24,51 +24,39 @@ Write-Host "  ✅ Mappar skapade" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 2.5 FIXA REQUIREMENTS.TXT (ta bort dubbletter)
+# 3. FIXA REQUIREMENTS.TXT (RENSA OCH LÄGG TILL SKLEARN)
 # ------------------------------
-Write-Host "1.5️⃣ Fixar requirements.txt (tar bort dubbletter)..." -ForegroundColor Yellow
+Write-Host "2️⃣ Fixar requirements.txt..." -ForegroundColor Yellow
 $reqPath = Join-Path $ProjectRoot "requirements.txt"
-if (Test-Path $reqPath) {
-    # Läs in filen
-    $content = Get-Content $reqPath
-    
-    # Skapa nytt innehåll med ENDAST scikit-learn==1.3.0
-    $newContent = @()
-    $airflowSection = $false
-    
-    foreach ($line in $content) {
-        # Hoppa över Airflow-delen helt
-        if ($line -match "# Airflow") {
-            $airflowSection = $true
-            continue
-        }
-        if ($airflowSection -and $line -match "^$") {
-            $airflowSection = $false
-            continue
-        }
-        if ($airflowSection) {
-            continue
-        }
-        
-        # Hoppa över scikit-learn==1.2.2 om den finns
-        if ($line -match "^scikit-learn==1\.2\.2") {
-            continue
-        }
-        
-        # Behåll alla andra rader
-        $newContent += $line
-    }
-    
-    # Spara tillbaka
-    $newContent | Set-Content -Path $reqPath -Encoding UTF8
-    Write-Host "  ✅ requirements.txt fixad (endast scikit-learn==1.3.0)" -ForegroundColor Green
-}
+
+# Skapa nytt korrekt requirements.txt
+$newRequirements = @'
+pyodbc==5.0.0
+scikit-learn==1.3.0
+pandas==2.0.3
+joblib==1.3.2
+numpy==1.24.3
+
+# FastAPI
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+
+# Testing
+pytest==7.4.0
+pytest-cov==4.1.0
+httpx==0.25.0
+requests==2.31.0
+'@
+
+Set-Content -Path $reqPath -Value $newRequirements -Encoding UTF8
+Write-Host "  ✅ requirements.txt fixad (scikit-learn==1.3.0 tillagd)" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 3. SKAPA ML_TRANING_DAG.PY
+# 4. SKAPA ML_TRANING_DAG.PY
 # ------------------------------
-Write-Host "2️⃣ Skapar ML Training DAG..." -ForegroundColor Yellow
+Write-Host "3️⃣ Skapar ML Training DAG..." -ForegroundColor Yellow
 $mlDag = @'
 from datetime import datetime, timedelta
 from airflow import DAG
@@ -113,9 +101,9 @@ Write-Host "  ✅ ml_training_dag.py skapad" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 4. SKAPA MONITORING_DAG.PY
+# 5. SKAPA MONITORING_DAG.PY
 # ------------------------------
-Write-Host "3️⃣ Skapar Monitoring DAG..." -ForegroundColor Yellow
+Write-Host "4️⃣ Skapar Monitoring DAG..." -ForegroundColor Yellow
 $monDag = @'
 from datetime import datetime, timedelta
 from airflow import DAG
@@ -136,9 +124,9 @@ Write-Host "  ✅ monitoring_dag.py skapad" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 5. SKAPA DOCKER-COMPOSE.YML (UPPDATERAD MED ALLA ENV VARIABLER)
+# 6. SKAPA DOCKER-COMPOSE.YML
 # ------------------------------
-Write-Host "4️⃣ Skapar docker-compose.yml..." -ForegroundColor Yellow
+Write-Host "5️⃣ Skapar docker-compose.yml..." -ForegroundColor Yellow
 $compose = @'
 version: '3.8'
 services:
@@ -258,9 +246,9 @@ Write-Host "  ✅ docker-compose.yml skapad" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 6. SKAPA INIT-SKRIPT (UPPDATERAD MED PACKAGE INSTALLATION)
+# 7. SKAPA INIT-SKRIPT
 # ------------------------------
-Write-Host "5️⃣ Skapar init-airflow-db.ps1..." -ForegroundColor Yellow
+Write-Host "6️⃣ Skapar init-airflow-db.ps1..." -ForegroundColor Yellow
 $init = @'
 # =====================================================
 # init-airflow-db.ps1 - Initierar Airflow och installerar paket
@@ -325,9 +313,9 @@ Write-Host "  ✅ init-airflow-db.ps1 skapad" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 7. SKAPA README (ENKELT)
+# 8. SKAPA README
 # ------------------------------
-Write-Host "6️⃣ Skapar instruktioner..." -ForegroundColor Yellow
+Write-Host "7️⃣ Skapar instruktioner..." -ForegroundColor Yellow
 mkdir -Force docs | Out-Null
 $readme = @"
 # Airflow
@@ -346,9 +334,9 @@ Write-Host "  ✅ docs/AIRFLOW.md skapad" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 8. SKAPA FIX-SKRIPT (FÖR ATT ÅTERSTÄLLA OM PROBLEM)
+# 9. SKAPA FIX-SKRIPT
 # ------------------------------
-Write-Host "7️⃣ Skapar fix-airflow.ps1..." -ForegroundColor Yellow
+Write-Host "8️⃣ Skapar fix-airflow.ps1..." -ForegroundColor Yellow
 $fixScript = @'
 # =====================================================
 # fix-airflow.ps1 - Fixar sklearn-problem i Airflow
@@ -359,7 +347,6 @@ Write-Host "🔧 FIXAR AIRFLOW - INSTALLERAR SAKNADE PAKET" -ForegroundColor Cya
 Write-Host "==========================================================" -ForegroundColor Cyan
 Write-Host ""
 
-# Installera i alla containers
 Write-Host "1️⃣ Installerar scikit-learn i webservern..." -ForegroundColor Yellow
 docker exec endpointsecurityml-airflow-webserver-1 pip install scikit-learn==1.2.2 pandas==2.0.3 numpy==1.23.5 joblib==1.2.0
 
@@ -380,9 +367,9 @@ Write-Host "  ✅ fix-airflow.ps1 skapad" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 9. SKAPA UPPDATERAD CI.YML (MED RÄTT SKLEARN-VERSION)
+# 10. SKAPA UPPDATERAD CI.YML
 # ------------------------------
-Write-Host "8️⃣ Skapar uppdaterad ci.yml..." -ForegroundColor Yellow
+Write-Host "9️⃣ Skapar uppdaterad ci.yml..." -ForegroundColor Yellow
 
 $ciYml = @'
 name: CI - Build and Test
@@ -452,16 +439,16 @@ Write-Host "  ✅ .github/workflows/ci.yml uppdaterad" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 10. KLAR!
+# 11. KLAR!
 # ------------------------------
 Write-Host "==========================================================" -ForegroundColor Cyan
 Write-Host "✅ AIRFLOW SETUP KLAR!" -ForegroundColor Green
 Write-Host "==========================================================" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "📋 VAD HAR FIXATS:" -ForegroundColor Yellow
-Write-Host "  • requirements.txt - Rensad från dubletter (endast scikit-learn==1.3.0)" -ForegroundColor White
-Write-Host "  • Airflow DAGar - Skapade med rätt imports" -ForegroundColor White
-Write-Host "  • docker-compose.yml - Uppdaterad med rätt versioner" -ForegroundColor White
+Write-Host "  • requirements.txt - Skapad med scikit-learn==1.3.0" -ForegroundColor White
+Write-Host "  • Airflow DAGar - Skapade" -ForegroundColor White
+Write-Host "  • docker-compose.yml - Uppdaterad" -ForegroundColor White
 Write-Host "  • ci.yml - Uppdaterad" -ForegroundColor White
 Write-Host ""
 Write-Host "📋 KÖR I ORDNING:" -ForegroundColor Green
@@ -469,6 +456,7 @@ Write-Host "  1. .\init-airflow-db.ps1" -ForegroundColor Yellow
 Write-Host "  2. docker-compose up -d" -ForegroundColor Yellow
 Write-Host "  3. Öppna http://localhost:8080/login (admin/admin)" -ForegroundColor Yellow
 Write-Host ""
-Write-Host "📋 OM CI FORTFARANDE KLAGAR:" -ForegroundColor Yellow
-Write-Host "  • Pusha ändringarna till GitHub" -ForegroundColor White
-Write-Host "  • Kolla att requirements.txt bara har scikit-learn==1.3.0" -ForegroundColor White
+Write-Host "📋 EFTER DETTA, PUSHA TILL GITHUB:" -ForegroundColor Yellow
+Write-Host "  git add ." -ForegroundColor White
+Write-Host "  git commit -m 'Fixat requirements.txt med scikit-learn'" -ForegroundColor White
+Write-Host "  git push origin main" -ForegroundColor White

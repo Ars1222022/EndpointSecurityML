@@ -7,7 +7,6 @@ Write-Host "🔧 FIXAR AIRFLOW - INSTALLERAR SAKNADE PAKET" -ForegroundColor Cya
 Write-Host "==========================================================" -ForegroundColor Cyan
 Write-Host ""
 
-# Installera i alla containers
 Write-Host "1️⃣ Installerar scikit-learn i webservern..." -ForegroundColor Yellow
 docker exec endpointsecurityml-airflow-webserver-1 pip install scikit-learn==1.2.2 pandas==2.0.3 numpy==1.23.5 joblib==1.2.0
 
