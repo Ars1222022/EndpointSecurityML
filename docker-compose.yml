@@ -27,7 +27,7 @@ services:
       AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://airflow:airflow@postgres/airflow
       AIRFLOW__CELERY__BROKER_URL: redis://redis:6379/0
       AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
-      _PIP_ADDITIONAL_REQUIREMENTS: "scikit-learn pandas numpy joblib requests"
+      _PIP_ADDITIONAL_REQUIREMENTS: "scikit-learn==1.2.2 pandas==2.0.3 numpy==1.23.5 joblib==1.2.0 requests"
     volumes:
       - ./airflow/dags:/opt/airflow/dags
       - ./airflow/logs:/opt/airflow/logs
@@ -49,7 +49,7 @@ services:
       AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://airflow:airflow@postgres/airflow
       AIRFLOW__CELERY__BROKER_URL: redis://redis:6379/0
       AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
-      _PIP_ADDITIONAL_REQUIREMENTS: "scikit-learn pandas numpy joblib requests"
+      _PIP_ADDITIONAL_REQUIREMENTS: "scikit-learn==1.2.2 pandas==2.0.3 numpy==1.23.5 joblib==1.2.0 requests"
     volumes:
       - ./airflow/dags:/opt/airflow/dags
       - ./airflow/logs:/opt/airflow/logs
@@ -71,7 +71,7 @@ services:
       AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://airflow:airflow@postgres/airflow
       AIRFLOW__CELERY__BROKER_URL: redis://redis:6379/0
       AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
-      _PIP_ADDITIONAL_REQUIREMENTS: "scikit-learn pandas numpy joblib requests"
+      _PIP_ADDITIONAL_REQUIREMENTS: "scikit-learn==1.2.2 pandas==2.0.3 numpy==1.23.5 joblib==1.2.0 requests"
     volumes:
       - ./airflow/dags:/opt/airflow/dags
       - ./airflow/logs:/opt/airflow/logs

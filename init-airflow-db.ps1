@@ -43,9 +43,9 @@ Start-Sleep -Seconds 20
 
 # 6. Installera scikit-learn i alla containers
 Write-Host "5️⃣ Installerar scikit-learn i Airflow-containers..." -ForegroundColor Yellow
-docker exec endpointsecurityml-airflow-webserver-1 pip install scikit-learn pandas numpy joblib
-docker exec endpointsecurityml-airflow-scheduler-1 pip install scikit-learn pandas numpy joblib
-docker exec endpointsecurityml-airflow-worker-1 pip install scikit-learn pandas numpy joblib
+docker exec endpointsecurityml-airflow-webserver-1 pip install scikit-learn==1.2.2 pandas==2.0.3 numpy==1.23.5 joblib==1.2.0
+docker exec endpointsecurityml-airflow-scheduler-1 pip install scikit-learn==1.2.2 pandas==2.0.3 numpy==1.23.5 joblib==1.2.0
+docker exec endpointsecurityml-airflow-worker-1 pip install scikit-learn==1.2.2 pandas==2.0.3 numpy==1.23.5 joblib==1.2.0
 
 # 7. Starta om Airflow-containers
 Write-Host "6️⃣ Startar om Airflow-containers..." -ForegroundColor Yellow

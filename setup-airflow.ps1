@@ -127,7 +127,7 @@ services:
       AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://airflow:airflow@postgres/airflow
       AIRFLOW__CELERY__BROKER_URL: redis://redis:6379/0
       AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
-      _PIP_ADDITIONAL_REQUIREMENTS: "scikit-learn pandas numpy joblib requests"
+      _PIP_ADDITIONAL_REQUIREMENTS: "scikit-learn==1.2.2 pandas==2.0.3 numpy==1.23.5 joblib==1.2.0 requests"
     volumes:
       - ./airflow/dags:/opt/airflow/dags
       - ./airflow/logs:/opt/airflow/logs
@@ -149,7 +149,7 @@ services:
       AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://airflow:airflow@postgres/airflow
       AIRFLOW__CELERY__BROKER_URL: redis://redis:6379/0
       AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
-      _PIP_ADDITIONAL_REQUIREMENTS: "scikit-learn pandas numpy joblib requests"
+      _PIP_ADDITIONAL_REQUIREMENTS: "scikit-learn==1.2.2 pandas==2.0.3 numpy==1.23.5 joblib==1.2.0 requests"
     volumes:
       - ./airflow/dags:/opt/airflow/dags
       - ./airflow/logs:/opt/airflow/logs
@@ -171,7 +171,7 @@ services:
       AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://airflow:airflow@postgres/airflow
       AIRFLOW__CELERY__BROKER_URL: redis://redis:6379/0
       AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
-      _PIP_ADDITIONAL_REQUIREMENTS: "scikit-learn pandas numpy joblib requests"
+      _PIP_ADDITIONAL_REQUIREMENTS: "scikit-learn==1.2.2 pandas==2.0.3 numpy==1.23.5 joblib==1.2.0 requests"
     volumes:
       - ./airflow/dags:/opt/airflow/dags
       - ./airflow/logs:/opt/airflow/logs
@@ -265,9 +265,9 @@ Start-Sleep -Seconds 20
 
 # 6. Installera scikit-learn i alla containers
 Write-Host "5️⃣ Installerar scikit-learn i Airflow-containers..." -ForegroundColor Yellow
-docker exec endpointsecurityml-airflow-webserver-1 pip install scikit-learn pandas numpy joblib
-docker exec endpointsecurityml-airflow-scheduler-1 pip install scikit-learn pandas numpy joblib
-docker exec endpointsecurityml-airflow-worker-1 pip install scikit-learn pandas numpy joblib
+docker exec endpointsecurityml-airflow-webserver-1 pip install scikit-learn==1.2.2 pandas==2.0.3 numpy==1.23.5 joblib==1.2.0
+docker exec endpointsecurityml-airflow-scheduler-1 pip install scikit-learn==1.2.2 pandas==2.0.3 numpy==1.23.5 joblib==1.2.0
+docker exec endpointsecurityml-airflow-worker-1 pip install scikit-learn==1.2.2 pandas==2.0.3 numpy==1.23.5 joblib==1.2.0
 
 # 7. Starta om Airflow-containers
 Write-Host "6️⃣ Startar om Airflow-containers..." -ForegroundColor Yellow
@@ -319,13 +319,13 @@ Write-Host ""
 
 # Installera i alla containers
 Write-Host "1️⃣ Installerar scikit-learn i webservern..." -ForegroundColor Yellow
-docker exec endpointsecurityml-airflow-webserver-1 pip install scikit-learn pandas numpy joblib
+docker exec endpointsecurityml-airflow-webserver-1 pip install scikit-learn==1.2.2 pandas==2.0.3 numpy==1.23.5 joblib==1.2.0
 
 Write-Host "2️⃣ Installerar i schedulern..." -ForegroundColor Yellow
-docker exec endpointsecurityml-airflow-scheduler-1 pip install scikit-learn pandas numpy joblib
+docker exec endpointsecurityml-airflow-scheduler-1 pip install scikit-learn==1.2.2 pandas==2.0.3 numpy==1.23.5 joblib==1.2.0
 
 Write-Host "3️⃣ Installerar i workern..." -ForegroundColor Yellow
-docker exec endpointsecurityml-airflow-worker-1 pip install scikit-learn pandas numpy joblib
+docker exec endpointsecurityml-airflow-worker-1 pip install scikit-learn==1.2.2 pandas==2.0.3 numpy==1.23.5 joblib==1.2.0
 
 Write-Host "4️⃣ Startar om Airflow-containers..." -ForegroundColor Yellow
 docker-compose restart airflow-webserver airflow-scheduler airflow-worker
