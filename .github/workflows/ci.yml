@@ -27,23 +27,23 @@ jobs:
       - name: Create test model
         run: |
           python -c '
-          import pandas as pd
-          import numpy as np
-          from sklearn.ensemble import RandomForestClassifier
-          import joblib
-          import os
-          from datetime import datetime
+import pandas as pd
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+import joblib
+import os
+from datetime import datetime
 
-          X_train = np.array([[0,0], [1,1], [0,0], [1,1]])
-          y_train = np.array([0,1,0,1])
-          model = RandomForestClassifier(n_estimators=10)
-          model.fit(X_train, y_train)
+X_train = np.array([[0,0], [1,1], [0,0], [1,1]])
+y_train = np.array([0,1,0,1])
+model = RandomForestClassifier(n_estimators=10)
+model.fit(X_train, y_train)
 
-          timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-          model_path = f"models/production/endpoint_model_{timestamp}.pkl"
-          joblib.dump(model, model_path)
-          print(f"Modell sparad: {model_path}")
-          '
+timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+model_path = f"models/production/endpoint_model_{timestamp}.pkl"
+joblib.dump(model, model_path)
+print(f"Modell sparad: {model_path}")
+'
           
       - name: Start API and run tests
         run: |
@@ -61,4 +61,4 @@ jobs:
           pytest tests/ -v
           
           # Stäng API
-          kill $API_PID
+          kill 

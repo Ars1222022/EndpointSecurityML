@@ -1,9 +1,9 @@
 # =====================================================
-# setup-github-actions.ps1 - 100% FELSÄKER VERSION
+# setup-github-actions.ps1 - KOMPLETT CI/CD SETUP
 # =====================================================
 
 Write-Host "==========================================================" -ForegroundColor Cyan
-Write-Host "GITHUB ACTIONS - KOMPLETT AUTOMATION" -ForegroundColor Cyan
+Write-Host "🤖 GITHUB ACTIONS - KOMPLETT SETUP" -ForegroundColor Cyan
 Write-Host "==========================================================" -ForegroundColor Cyan
 Write-Host ""
 
@@ -12,67 +12,37 @@ Write-Host ""
 # ------------------------------
 $ProjectRoot = Split-Path -Parent $MyInvocation.MyCommand.Definition
 Set-Location $ProjectRoot
-Write-Host "Projektmapp: $ProjectRoot" -ForegroundColor Green
+Write-Host "📁 Projektmapp: $ProjectRoot" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
 # 2. FRÅGA OM DOCKER HUB-ANVÄNDARNAMN
 # ------------------------------
-Write-Host "Docker Hub behövs för att lagra dina Docker-images" -ForegroundColor Cyan
+Write-Host "🔑 Docker Hub behövs för att lagra dina Docker-images" -ForegroundColor Cyan
+Write-Host "   (Om du inte har ett konto, skapa gratis på hub.docker.com)" -ForegroundColor Gray
 Write-Host ""
-$dockerUsername = Read-Host "Ange ditt Docker Hub användarnamn"
+$dockerUsername = Read-Host "📝 Ange ditt DOCKER HUB användarnamn"
 if ([string]::IsNullOrWhiteSpace($dockerUsername)) {
-    $dockerUsername = "ditt-anvandarnamn"
-    Write-Host "Använder standard: $dockerUsername" -ForegroundColor Yellow
+    $dockerUsername = "ditt-docker-anvandarnamn"
+    Write-Host "  ⚠️ Använder standard: $dockerUsername" -ForegroundColor Yellow
 }
 Write-Host ""
 
 # ------------------------------
-# 3. UPPDATERA REQUIREMENTS.TXT
+# 3. SKAPA GITHUB WORKFLOWS-MAPP
 # ------------------------------
-Write-Host "Steg 1: Uppdaterar requirements.txt..." -ForegroundColor Yellow
-
-$testDeps = @"
-
-# Testing
-pytest==7.4.0
-pytest-cov==4.1.0
-httpx==0.25.0
-requests==2.31.0
-"@
-
-$reqPath = Join-Path $ProjectRoot "requirements.txt"
-if (Test-Path $reqPath) {
-    Add-Content -Path $reqPath -Value $testDeps -Encoding UTF8
-    Write-Host "  OK - requirements.txt uppdaterad" -ForegroundColor Green
-} else {
-    Set-Content -Path $reqPath -Value "# ML Dependencies`nnumpy==1.23.5`npandas==2.0.3`nscikit-learn==1.2.2`njoblib==1.2.0`nfastapi==0.104.1`nuvicorn[standard]==0.24.0`npydantic==2.5.0`nmlflow==2.8.0$testDeps" -Encoding UTF8
-    Write-Host "  OK - requirements.txt skapad" -ForegroundColor Green
-}
-Write-Host ""
-
-# ------------------------------
-# 4. INSTALLERA ALLA BIBLIOTEK LOKALT
-# ------------------------------
-Write-Host "Steg 2: Installerar bibliotek lokalt..." -ForegroundColor Yellow
-pip install -r requirements.txt
-Write-Host ""
-
-# ------------------------------
-# 5. SKAPA GITHUB WORKFLOWS-MAPP
-# ------------------------------
-Write-Host "Steg 3: Skapar GitHub Actions-mapp..." -ForegroundColor Yellow
+Write-Host "1️⃣ Skapar GitHub Actions-mapp..." -ForegroundColor Yellow
 $workflowDir = Join-Path $ProjectRoot ".github" "workflows"
 New-Item -ItemType Directory -Path $workflowDir -Force | Out-Null
-Write-Host "  OK - .github/workflows/ mapp skapad" -ForegroundColor Green
+Write-Host "  ✅ .github/workflows/ mapp skapad" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 6. SKAPA CI.YML (ENKEL VERSION)
+# 4. SKAPA CI.YML
 # ------------------------------
-Write-Host "Steg 4: Skapar CI-workflow..." -ForegroundColor Yellow
+Write-Host "2️⃣ Skapar CI-workflow..." -ForegroundColor Yellow
 
-$ciYml = @'
+$ciYml = @"
 name: CI - Build and Test
 
 on:
@@ -85,24 +55,70 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: |
-          pip install -r requirements.txt
+          
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+          
+      - name: Create directories
+        run: |
+          mkdir -p data/raw
+          mkdir -p models/production
+          
+      - name: Create test model
+        run: |
+          python -c '
+import pandas as pd
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+import joblib
+import os
+from datetime import datetime
+
+X_train = np.array([[0,0], [1,1], [0,0], [1,1]])
+y_train = np.array([0,1,0,1])
+model = RandomForestClassifier(n_estimators=10)
+model.fit(X_train, y_train)
+
+timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+model_path = f"models/production/endpoint_model_{timestamp}.pkl"
+joblib.dump(model, model_path)
+print(f"Modell sparad: {model_path}")
+'
+          
+      - name: Start API and run tests
+        run: |
+          # Starta API i bakgrunden
+          uvicorn src.api.app:app --host 0.0.0.0 --port 8000 &
+          API_PID=$!
+          
+          # Vänta på att API startar
+          sleep 5
+          
+          # Testa att API:et är igång
+          curl -f http://localhost:8000/health || exit 1
+          
+          # Kör testerna
           pytest tests/ -v
-'@
+          
+          # Stäng API
+          kill $API_PID
+"@
 
 Set-Content -Path (Join-Path $workflowDir "ci.yml") -Value $ciYml -Encoding UTF8
-Write-Host "  OK - ci.yml skapad" -ForegroundColor Green
+Write-Host "  ✅ ci.yml skapad" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 7. SKAPA CD.YML (ENKEL VERSION)
+# 5. SKAPA CD.YML (med secrets - utan escaping)
 # ------------------------------
-Write-Host "Steg 5: Skapar CD-workflow..." -ForegroundColor Yellow
+Write-Host "3️⃣ Skapar CD-workflow..." -ForegroundColor Yellow
 
+# Skapa cd.yml som textfil utan att PowerShell tolkar den
 $cdYml = @'
 name: CD - Deploy to Docker Hub
 
@@ -114,78 +130,93 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: docker/login-action@v2
+      - uses: actions/checkout@v4
+      
+      - uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - uses: docker/build-push-action@v4
+          
+      - uses: docker/build-push-action@v5
         with:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/endpointsecurity-api:latest
+          file: Dockerfile.api
 '@
 
-# Spara som textfil - PowerShell tolkar inte innehållet
-$cdYml | Out-File -FilePath (Join-Path $workflowDir "cd.yml") -Encoding UTF8
-Write-Host "  OK - cd.yml skapad" -ForegroundColor Green
+# Spara direkt som UTF-8 utan PowerShell-tolkning
+[System.IO.File]::WriteAllLines((Join-Path $workflowDir "cd.yml"), $cdYml)
+Write-Host "  ✅ cd.yml skapad (använder secrets)" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 8. SKAPA TESTER
+# 6. SKAPA .ENV.EXAMPLE
 # ------------------------------
-Write-Host "Steg 6: Skapar enhetstester..." -ForegroundColor Yellow
+Write-Host "4️⃣ Skapar .env.example..." -ForegroundColor Yellow
+
+$envExample = @"
+# Docker Hub credentials (för GitHub Actions)
+DOCKER_USERNAME=$dockerUsername
+DOCKER_PASSWORD=din-docker-token-här
+"@
+
+Set-Content -Path (Join-Path $ProjectRoot ".env.example") -Value $envExample -Encoding UTF8
+Write-Host "  ✅ .env.example skapad" -ForegroundColor Green
+Write-Host ""
+
+# ------------------------------
+# 7. SKAPA TESTER-MAPP
+# ------------------------------
+Write-Host "5️⃣ Skapar tester..." -ForegroundColor Yellow
 
 $testsDir = Join-Path $ProjectRoot "tests"
 New-Item -ItemType Directory -Path $testsDir -Force | Out-Null
 
 $testApi = @'
-import pytest
-from fastapi.testclient import TestClient
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from src.api.app import app
+"""
+tests/test_api.py - Enhetstester för API:et
+"""
 
-client = TestClient(app)
+import pytest
+import requests
+
+API_URL = "http://localhost:8000"
 
 def test_health():
-    response = client.get("/health")
+    response = requests.get(f"{API_URL}/health")
     assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "ok"
 
 def test_predict_normal():
-    response = client.post("/predict", json={"NetworkConnections": 0, "ProcessName": "notepad.exe"})
+    response = requests.post(
+        f"{API_URL}/predict",
+        json={"NetworkConnections": 0, "ProcessName": "notepad.exe"}
+    )
     assert response.status_code == 200
-    assert response.json()["prediction"] == 0
+    data = response.json()
+    assert data["prediction"] == 0
+    assert data["threat_type"] == "Normal"
 
 def test_predict_attack():
-    response = client.post("/predict", json={"NetworkConnections": 1, "ProcessName": "powershell.exe"})
+    response = requests.post(
+        f"{API_URL}/predict",
+        json={"NetworkConnections": 1, "ProcessName": "powershell.exe"}
+    )
     assert response.status_code == 200
-    assert response.json()["prediction"] == 1
+    data = response.json()
+    assert data["prediction"] == 1
+    assert data["threat_type"] == "Attack"
 '@
 
 Set-Content -Path (Join-Path $testsDir "test_api.py") -Value $testApi -Encoding UTF8
-Write-Host "  OK - tester skapade" -ForegroundColor Green
+Write-Host "  ✅ test_api.py skapad" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 9. SKAPA ENV.EXAMPLE
+# 8. SKAPA PYTEST.INI
 # ------------------------------
-Write-Host "Steg 7: Skapar .env.example..." -ForegroundColor Yellow
-
-$envExample = @"
-# Docker Hub credentials
-DOCKER_USERNAME=$dockerUsername
-DOCKER_PASSWORD=change-this
-"@
-
-Set-Content -Path (Join-Path $ProjectRoot ".env.example") -Value $envExample -Encoding UTF8
-Write-Host "  OK - .env.example skapad" -ForegroundColor Green
-Write-Host ""
-
-# ------------------------------
-# 10. SKAPA pytest.ini
-# ------------------------------
-Write-Host "Steg 8: Skapar pytest.ini..." -ForegroundColor Yellow
+Write-Host "6️⃣ Skapar pytest.ini..." -ForegroundColor Yellow
 
 $pytestIni = @"
 [pytest]
@@ -193,38 +224,13 @@ testpaths = tests
 "@
 
 Set-Content -Path (Join-Path $ProjectRoot "pytest.ini") -Value $pytestIni -Encoding UTF8
-Write-Host "  OK - pytest.ini skapad" -ForegroundColor Green
+Write-Host "  ✅ pytest.ini skapad" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 11. UPPDATERA README.MD (UTAN SPECIALTECKEN)
+# 9. SKAPA TEST-CICD.PS1
 # ------------------------------
-Write-Host "Steg 9: Uppdaterar README.md..." -ForegroundColor Yellow
-
-$readmePath = Join-Path $ProjectRoot "README.md"
-$readmeContent = @"
-
-CI/CD Automatisering
-====================
-Detta projekt anvander GitHub Actions.
-
-Docker Image
-------------
-docker pull $dockerUsername/endpointsecurity-api:latest
-
-Kor tester lokalt
------------------
-pytest tests/ -v
-"@
-
-Add-Content -Path $readmePath -Value $readmeContent -Encoding UTF8
-Write-Host "  OK - README.md uppdaterad" -ForegroundColor Green
-Write-Host ""
-
-# ------------------------------
-# 12. SKAPA KONTROLL-SKRIPT (UTAN SPECIALTECKEN)
-# ------------------------------
-Write-Host "Steg 10: Skapar test-skript..." -ForegroundColor Yellow
+Write-Host "7️⃣ Skapar test-cicd.ps1..." -ForegroundColor Yellow
 
 $testScript = @'
 Write-Host "Testar CI/CD setup..."
@@ -241,16 +247,47 @@ Write-Host "3. Ga till Actions fliken"
 '@
 
 Set-Content -Path (Join-Path $ProjectRoot "test-cicd.ps1") -Value $testScript -Encoding UTF8
-Write-Host "  OK - test-cicd.ps1 skapad" -ForegroundColor Green
+Write-Host "  ✅ test-cicd.ps1 skapad" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 13. KLAR!
+# 10. UPPDATERA REQUIREMENTS.TXT
+# ------------------------------
+Write-Host "8️⃣ Uppdaterar requirements.txt..." -ForegroundColor Yellow
+
+$reqPath = Join-Path $ProjectRoot "requirements.txt"
+$testDeps = @"
+
+# Testing
+pytest==7.4.0
+pytest-cov==4.1.0
+httpx==0.25.0
+requests==2.31.0
+"@
+
+if (Test-Path $reqPath) {
+    Add-Content -Path $reqPath -Value $testDeps -Encoding UTF8
+} else {
+    Set-Content -Path $reqPath -Value "# ML Dependencies`nnumpy==1.23.5`npandas==2.0.3`nscikit-learn==1.2.2`njoblib==1.2.0`nfastapi==0.104.1`nuvicorn[standard]==0.24.0`npydantic==2.5.0`nmlflow==2.8.0$testDeps" -Encoding UTF8
+}
+Write-Host "  ✅ requirements.txt uppdaterad" -ForegroundColor Green
+Write-Host ""
+
+# ------------------------------
+# 11. KLAR!
 # ------------------------------
 Write-Host "==========================================================" -ForegroundColor Cyan
-Write-Host "KLAR! Allt ar installerat." -ForegroundColor Green
+Write-Host "✅ GITHUB ACTIONS SETUP KLAR!" -ForegroundColor Green
 Write-Host "==========================================================" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "Docker Hub anvandarnamn: $dockerUsername" -ForegroundColor Yellow
+Write-Host "📋 DINA UPPGIFTER:" -ForegroundColor Yellow
+Write-Host "  Docker Hub användarnamn: $dockerUsername (för .env.example)" -ForegroundColor White
+Write-Host "  I GitHub secrets ska du använda:" -ForegroundColor White
+Write-Host "    DOCKER_USERNAME = ditt Docker Hub användarnamn" -ForegroundColor Gray
+Write-Host "    DOCKER_PASSWORD = din Docker Hub token" -ForegroundColor Gray
 Write-Host ""
-Write-Host "Kor nu: .\test-cicd.ps1" -ForegroundColor Yellow
+Write-Host "📋 NÄSTA STEG:" -ForegroundColor Green
+Write-Host "  1. Kör .\test-cicd.ps1 för att verifiera" -ForegroundColor Yellow
+Write-Host "  2. Pusha till GitHub" -ForegroundColor Yellow
+Write-Host "  3. Lägg till secrets på GitHub" -ForegroundColor Yellow
+Write-Host "  4. Kolla Actions-fliken" -ForegroundColor Yellow
