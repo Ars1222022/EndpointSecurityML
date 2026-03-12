@@ -1,0 +1,564 @@
+[2026-03-12T20:09:29.270+0000] {processor.py:161} INFO - Started process (PID=42) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:09:29.271+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:09:29.273+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:09:29.272+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:09:29.970+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:09:29.966+0000] {dagbag.py:348} ERROR - Failed to import: /opt/airflow/dags/ml_training_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 344, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/ml_training_dag.py", line 10, in <module>
+    from sklearn.ensemble import RandomForestClassifier
+ModuleNotFoundError: No module named 'sklearn'
+[2026-03-12T20:09:29.975+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:09:29.993+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.726 seconds
+[2026-03-12T20:10:00.761+0000] {processor.py:161} INFO - Started process (PID=45) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:10:00.764+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:10:00.767+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:10:00.767+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:10:01.155+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:10:01.150+0000] {dagbag.py:348} ERROR - Failed to import: /opt/airflow/dags/ml_training_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 344, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/ml_training_dag.py", line 10, in <module>
+    from sklearn.ensemble import RandomForestClassifier
+ModuleNotFoundError: No module named 'sklearn'
+[2026-03-12T20:10:01.157+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:10:01.199+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.445 seconds
+[2026-03-12T20:10:32.034+0000] {processor.py:161} INFO - Started process (PID=48) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:10:32.035+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:10:32.036+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:10:32.036+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:10:32.224+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:10:32.219+0000] {dagbag.py:348} ERROR - Failed to import: /opt/airflow/dags/ml_training_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 344, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/ml_training_dag.py", line 10, in <module>
+    from sklearn.ensemble import RandomForestClassifier
+ModuleNotFoundError: No module named 'sklearn'
+[2026-03-12T20:10:32.225+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:10:32.244+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.213 seconds
+[2026-03-12T20:11:02.336+0000] {processor.py:161} INFO - Started process (PID=51) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:11:02.337+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:11:02.338+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:11:02.338+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:11:02.544+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:11:02.541+0000] {dagbag.py:348} ERROR - Failed to import: /opt/airflow/dags/ml_training_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 344, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/ml_training_dag.py", line 10, in <module>
+    from sklearn.ensemble import RandomForestClassifier
+ModuleNotFoundError: No module named 'sklearn'
+[2026-03-12T20:11:02.545+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:11:02.560+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.227 seconds
+[2026-03-12T20:11:32.648+0000] {processor.py:161} INFO - Started process (PID=54) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:11:32.649+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:11:32.651+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:11:32.650+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:11:32.843+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:11:32.837+0000] {dagbag.py:348} ERROR - Failed to import: /opt/airflow/dags/ml_training_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 344, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/ml_training_dag.py", line 10, in <module>
+    from sklearn.ensemble import RandomForestClassifier
+ModuleNotFoundError: No module named 'sklearn'
+[2026-03-12T20:11:32.844+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:11:32.863+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.217 seconds
+[2026-03-12T20:12:03.063+0000] {processor.py:161} INFO - Started process (PID=57) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:12:03.064+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:12:03.065+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:12:03.065+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:12:03.259+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:12:03.256+0000] {dagbag.py:348} ERROR - Failed to import: /opt/airflow/dags/ml_training_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 344, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/ml_training_dag.py", line 10, in <module>
+    from sklearn.ensemble import RandomForestClassifier
+ModuleNotFoundError: No module named 'sklearn'
+[2026-03-12T20:12:03.260+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:12:03.275+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.215 seconds
+[2026-03-12T20:12:33.372+0000] {processor.py:161} INFO - Started process (PID=60) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:12:33.372+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:12:33.374+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:12:33.374+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:12:33.573+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:12:33.568+0000] {dagbag.py:348} ERROR - Failed to import: /opt/airflow/dags/ml_training_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 344, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/ml_training_dag.py", line 10, in <module>
+    from sklearn.ensemble import RandomForestClassifier
+ModuleNotFoundError: No module named 'sklearn'
+[2026-03-12T20:12:33.573+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:12:33.592+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.223 seconds
+[2026-03-12T20:12:59.909+0000] {processor.py:161} INFO - Started process (PID=43) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:12:59.910+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:12:59.911+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:12:59.911+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:13:00.107+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:13:00.104+0000] {dagbag.py:348} ERROR - Failed to import: /opt/airflow/dags/ml_training_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 344, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/ml_training_dag.py", line 10, in <module>
+    from sklearn.ensemble import RandomForestClassifier
+ModuleNotFoundError: No module named 'sklearn'
+[2026-03-12T20:13:00.108+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:13:00.122+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.216 seconds
+[2026-03-12T20:13:10.101+0000] {processor.py:161} INFO - Started process (PID=42) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:13:10.102+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:13:10.104+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:13:10.103+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:13:10.304+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:13:10.301+0000] {dagbag.py:348} ERROR - Failed to import: /opt/airflow/dags/ml_training_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 344, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/ml_training_dag.py", line 10, in <module>
+    from sklearn.ensemble import RandomForestClassifier
+ModuleNotFoundError: No module named 'sklearn'
+[2026-03-12T20:13:10.305+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:13:10.319+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.221 seconds
+[2026-03-12T20:13:37.192+0000] {processor.py:161} INFO - Started process (PID=42) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:13:37.193+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:13:37.195+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:13:37.195+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:13:37.398+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:13:37.396+0000] {dagbag.py:348} ERROR - Failed to import: /opt/airflow/dags/ml_training_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 344, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/ml_training_dag.py", line 10, in <module>
+    from sklearn.ensemble import RandomForestClassifier
+ModuleNotFoundError: No module named 'sklearn'
+[2026-03-12T20:13:37.399+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:13:37.413+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.224 seconds
+[2026-03-12T20:14:07.505+0000] {processor.py:161} INFO - Started process (PID=45) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:14:07.506+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:14:07.507+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:14:07.507+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:14:07.812+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:14:07.809+0000] {dagbag.py:348} ERROR - Failed to import: /opt/airflow/dags/ml_training_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 344, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/ml_training_dag.py", line 10, in <module>
+    from sklearn.ensemble import RandomForestClassifier
+ModuleNotFoundError: No module named 'sklearn'
+[2026-03-12T20:14:07.813+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:14:07.825+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.322 seconds
+[2026-03-12T20:14:37.891+0000] {processor.py:161} INFO - Started process (PID=48) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:14:37.892+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:14:37.894+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:14:37.894+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:14:38.084+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:14:38.080+0000] {dagbag.py:348} ERROR - Failed to import: /opt/airflow/dags/ml_training_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 344, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/ml_training_dag.py", line 10, in <module>
+    from sklearn.ensemble import RandomForestClassifier
+ModuleNotFoundError: No module named 'sklearn'
+[2026-03-12T20:14:38.084+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:14:38.101+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.212 seconds
+[2026-03-12T20:15:08.211+0000] {processor.py:161} INFO - Started process (PID=51) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:15:08.212+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:15:08.214+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:15:08.214+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:15:08.401+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:15:08.397+0000] {dagbag.py:348} ERROR - Failed to import: /opt/airflow/dags/ml_training_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 344, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/ml_training_dag.py", line 10, in <module>
+    from sklearn.ensemble import RandomForestClassifier
+ModuleNotFoundError: No module named 'sklearn'
+[2026-03-12T20:15:08.401+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:15:08.419+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.211 seconds
+[2026-03-12T20:15:38.509+0000] {processor.py:161} INFO - Started process (PID=54) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:15:38.510+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:15:38.512+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:15:38.512+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:15:38.713+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:15:38.710+0000] {dagbag.py:348} ERROR - Failed to import: /opt/airflow/dags/ml_training_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 344, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/ml_training_dag.py", line 10, in <module>
+    from sklearn.ensemble import RandomForestClassifier
+ModuleNotFoundError: No module named 'sklearn'
+[2026-03-12T20:15:38.714+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:15:38.733+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.226 seconds
+[2026-03-12T20:16:20.628+0000] {processor.py:161} INFO - Started process (PID=64) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:16:20.629+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:16:20.631+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:16:20.631+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:16:21.771+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:16:21.920+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:16:21.919+0000] {override.py:1769} INFO - Created Permission View: can delete on DAG:ml_training
+[2026-03-12T20:16:21.928+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:16:21.927+0000] {override.py:1769} INFO - Created Permission View: can read on DAG:ml_training
+[2026-03-12T20:16:21.933+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:16:21.933+0000] {override.py:1769} INFO - Created Permission View: can edit on DAG:ml_training
+[2026-03-12T20:16:21.934+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:16:21.933+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:16:21.942+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:16:21.941+0000] {dag.py:3058} INFO - Creating ORM DAG for ml_training
+[2026-03-12T20:16:21.949+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:16:21.949+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-11 03:00:00+00:00, run_after=2026-03-12 03:00:00+00:00
+[2026-03-12T20:16:21.962+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 1.337 seconds
+[2026-03-12T20:16:52.043+0000] {processor.py:161} INFO - Started process (PID=82) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:16:52.044+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:16:52.046+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:16:52.046+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:16:52.731+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:16:52.755+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:16:52.754+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:16:52.772+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:16:52.772+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:16:52.789+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.749 seconds
+[2026-03-12T20:17:23.227+0000] {processor.py:161} INFO - Started process (PID=100) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:17:23.228+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:17:23.229+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:17:23.229+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:17:23.838+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:17:23.857+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:17:23.857+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:17:23.872+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:17:23.872+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:17:23.889+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.665 seconds
+[2026-03-12T20:17:54.518+0000] {processor.py:161} INFO - Started process (PID=118) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:17:54.519+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:17:54.520+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:17:54.520+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:17:55.172+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:17:55.189+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:17:55.189+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:17:55.206+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:17:55.206+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:17:55.221+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.706 seconds
+[2026-03-12T20:18:25.816+0000] {processor.py:161} INFO - Started process (PID=136) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:18:25.816+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:18:25.818+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:18:25.818+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:18:26.408+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:18:26.424+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:18:26.423+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:18:26.438+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:18:26.438+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:18:26.451+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.638 seconds
+[2026-03-12T20:18:57.112+0000] {processor.py:161} INFO - Started process (PID=154) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:18:57.113+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:18:57.114+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:18:57.114+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:18:57.740+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:18:57.758+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:18:57.758+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:18:57.772+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:18:57.772+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:18:57.785+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.676 seconds
+[2026-03-12T20:19:28.401+0000] {processor.py:161} INFO - Started process (PID=172) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:19:28.402+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:19:28.404+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:19:28.403+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:19:29.030+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:19:29.049+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:19:29.048+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:19:29.063+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:19:29.063+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:19:29.077+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.679 seconds
+[2026-03-12T20:19:59.744+0000] {processor.py:161} INFO - Started process (PID=190) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:19:59.745+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:19:59.747+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:19:59.746+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:20:00.517+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:20:00.554+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:20:00.552+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:20:00.595+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:20:00.594+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:20:00.642+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.901 seconds
+[2026-03-12T20:20:30.918+0000] {processor.py:161} INFO - Started process (PID=208) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:20:30.919+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:20:30.920+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:20:30.920+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:20:31.512+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:20:31.530+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:20:31.530+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:20:31.546+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:20:31.545+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:20:31.559+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.644 seconds
+[2026-03-12T20:21:02.220+0000] {processor.py:161} INFO - Started process (PID=226) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:21:02.221+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:21:02.223+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:21:02.223+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:21:02.874+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:21:02.893+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:21:02.893+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:21:02.910+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:21:02.910+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:21:02.923+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.705 seconds
+[2026-03-12T20:21:33.508+0000] {processor.py:161} INFO - Started process (PID=244) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:21:33.509+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:21:33.510+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:21:33.510+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:21:34.160+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:21:34.177+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:21:34.177+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:21:34.193+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:21:34.193+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:21:34.210+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.706 seconds
+[2026-03-12T20:22:04.817+0000] {processor.py:161} INFO - Started process (PID=262) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:22:04.817+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:22:04.819+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:22:04.819+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:22:05.466+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:22:05.484+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:22:05.483+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:22:05.497+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:22:05.497+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:22:05.514+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.700 seconds
+[2026-03-12T20:22:36.085+0000] {processor.py:161} INFO - Started process (PID=280) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:22:36.086+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:22:36.088+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:22:36.088+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:22:36.707+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:22:36.723+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:22:36.723+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:22:36.736+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:22:36.736+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:22:36.754+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.671 seconds
+[2026-03-12T20:23:07.382+0000] {processor.py:161} INFO - Started process (PID=298) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:23:07.383+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:23:07.385+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:23:07.385+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:23:07.978+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:23:07.997+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:23:07.996+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:23:08.014+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:23:08.014+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:23:08.032+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.653 seconds
+[2026-03-12T20:23:38.709+0000] {processor.py:161} INFO - Started process (PID=316) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:23:38.710+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:23:38.711+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:23:38.711+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:23:39.317+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:23:39.334+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:23:39.334+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:23:39.348+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:23:39.348+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:23:39.364+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.658 seconds
+[2026-03-12T20:24:10.011+0000] {processor.py:161} INFO - Started process (PID=334) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:24:10.012+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:24:10.014+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:24:10.014+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:24:10.620+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:24:10.638+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:24:10.637+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:24:10.653+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:24:10.653+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:24:10.673+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.664 seconds
+[2026-03-12T20:24:41.321+0000] {processor.py:161} INFO - Started process (PID=352) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:24:41.322+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:24:41.324+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:24:41.323+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:24:41.951+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:24:41.969+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:24:41.968+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:24:41.983+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:24:41.983+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:24:41.998+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.680 seconds
+[2026-03-12T20:25:12.624+0000] {processor.py:161} INFO - Started process (PID=370) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:25:12.625+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:25:12.627+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:25:12.626+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:25:13.283+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:25:13.300+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:25:13.300+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:25:13.315+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:25:13.315+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:25:13.329+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.708 seconds
+[2026-03-12T20:25:43.896+0000] {processor.py:161} INFO - Started process (PID=388) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:25:43.897+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:25:43.898+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:25:43.898+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:25:44.513+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:25:44.530+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:25:44.530+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:25:44.545+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:25:44.545+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:25:44.561+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.667 seconds
+[2026-03-12T20:26:15.172+0000] {processor.py:161} INFO - Started process (PID=406) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:26:15.173+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:26:15.174+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:26:15.174+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:26:15.779+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:26:15.796+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:26:15.796+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:26:15.811+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:26:15.811+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:26:15.829+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.660 seconds
+[2026-03-12T20:26:46.483+0000] {processor.py:161} INFO - Started process (PID=424) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:26:46.484+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:26:46.485+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:26:46.485+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:26:47.126+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:26:47.142+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:26:47.142+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:26:47.158+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:26:47.158+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:26:47.177+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.697 seconds
+[2026-03-12T20:27:17.759+0000] {processor.py:161} INFO - Started process (PID=442) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:27:17.760+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:27:17.761+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:27:17.761+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:27:18.405+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:27:18.426+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:27:18.425+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:27:18.441+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:27:18.440+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:27:18.458+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.702 seconds
+[2026-03-12T20:27:49.050+0000] {processor.py:161} INFO - Started process (PID=460) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:27:49.051+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:27:49.053+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:27:49.053+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:27:49.693+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:27:49.711+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:27:49.710+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:27:49.725+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:27:49.725+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:27:49.744+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.696 seconds
+[2026-03-12T20:28:20.294+0000] {processor.py:161} INFO - Started process (PID=478) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:28:20.295+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:28:20.297+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:28:20.296+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:28:20.950+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:28:20.966+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:28:20.966+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:28:20.982+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:28:20.981+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:28:21.001+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.710 seconds
+[2026-03-12T20:28:51.572+0000] {processor.py:161} INFO - Started process (PID=496) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:28:51.573+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:28:51.575+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:28:51.575+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:28:52.235+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:28:52.254+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:28:52.253+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:28:52.274+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:28:52.274+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:28:52.290+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.721 seconds
+[2026-03-12T20:29:22.883+0000] {processor.py:161} INFO - Started process (PID=514) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:29:22.884+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:29:22.886+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:29:22.886+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:29:23.552+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:29:23.572+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:29:23.572+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:29:23.588+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:29:23.588+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:29:23.604+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.724 seconds
+[2026-03-12T20:29:54.161+0000] {processor.py:161} INFO - Started process (PID=532) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:29:54.162+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:29:54.164+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:29:54.163+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:29:54.782+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:29:54.800+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:29:54.799+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:29:54.813+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:29:54.813+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:29:54.827+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.668 seconds
+[2026-03-12T20:30:25.469+0000] {processor.py:161} INFO - Started process (PID=550) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:30:25.470+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:30:25.472+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:30:25.471+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:30:26.088+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:30:26.106+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:30:26.106+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:30:26.121+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:30:26.121+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:30:26.134+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.668 seconds
+[2026-03-12T20:30:56.751+0000] {processor.py:161} INFO - Started process (PID=568) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:30:56.751+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:30:56.753+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:30:56.753+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:30:57.429+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:30:57.451+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:30:57.451+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:30:57.469+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:30:57.469+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:30:57.483+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.735 seconds
+[2026-03-12T20:31:28.096+0000] {processor.py:161} INFO - Started process (PID=586) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:31:28.098+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:31:28.099+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:31:28.099+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:31:28.732+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:31:28.752+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:31:28.751+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:31:28.767+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:31:28.767+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:31:28.781+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.687 seconds
+[2026-03-12T20:31:59.334+0000] {processor.py:161} INFO - Started process (PID=605) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:31:59.335+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:31:59.336+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:31:59.336+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:31:59.944+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:31:59.963+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:31:59.962+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:31:59.978+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:31:59.978+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:31:59.993+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.662 seconds
+[2026-03-12T20:32:30.630+0000] {processor.py:161} INFO - Started process (PID=623) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:32:30.631+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:32:30.632+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:32:30.632+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:32:31.284+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:32:31.303+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:32:31.302+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:32:31.320+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:32:31.320+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:32:31.334+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.707 seconds
+[2026-03-12T20:33:01.952+0000] {processor.py:161} INFO - Started process (PID=641) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:33:01.953+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:33:01.955+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:33:01.955+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:33:02.603+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:33:02.624+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:33:02.623+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:33:02.641+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:33:02.641+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:33:02.658+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.709 seconds
+[2026-03-12T20:33:33.231+0000] {processor.py:161} INFO - Started process (PID=659) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:33:33.232+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:33:33.234+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:33:33.233+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:33:33.917+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:33:33.937+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:33:33.937+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:33:33.952+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:33:33.951+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:33:33.970+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.742 seconds
+[2026-03-12T20:34:04.534+0000] {processor.py:161} INFO - Started process (PID=677) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:34:04.535+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:34:04.536+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:34:04.536+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:34:05.180+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:34:05.199+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:34:05.198+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:34:05.212+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:34:05.212+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:34:05.232+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.701 seconds
+[2026-03-12T20:34:35.973+0000] {processor.py:161} INFO - Started process (PID=695) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:34:35.974+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:34:35.975+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:34:35.975+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:34:36.604+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:34:36.621+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:34:36.621+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:34:36.636+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:34:36.636+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:34:36.705+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.735 seconds
+[2026-03-12T20:35:07.305+0000] {processor.py:161} INFO - Started process (PID=713) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:35:07.306+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:35:07.308+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:35:07.308+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:35:07.978+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:35:07.995+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:35:07.995+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:35:08.010+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:35:08.010+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:35:08.025+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.723 seconds
+[2026-03-12T20:35:38.785+0000] {processor.py:161} INFO - Started process (PID=731) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:35:38.786+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:35:38.787+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:35:38.787+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:35:39.415+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:35:39.434+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:35:39.434+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:35:39.449+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:35:39.449+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:35:39.463+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.681 seconds
+[2026-03-12T20:36:10.082+0000] {processor.py:161} INFO - Started process (PID=749) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:36:10.083+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:36:10.085+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:36:10.085+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:36:10.729+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:36:10.747+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:36:10.747+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:36:10.762+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:36:10.762+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:36:10.776+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.697 seconds
+[2026-03-12T20:36:41.393+0000] {processor.py:161} INFO - Started process (PID=767) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:36:41.395+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:36:41.397+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:36:41.396+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:36:42.095+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:36:42.113+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:36:42.113+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:36:42.129+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:36:42.129+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:36:42.149+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.759 seconds
+[2026-03-12T20:37:12.685+0000] {processor.py:161} INFO - Started process (PID=785) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:37:12.686+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:37:12.688+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:37:12.687+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:37:13.322+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:37:13.339+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:37:13.339+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:37:13.355+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:37:13.355+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:37:13.375+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.694 seconds
+[2026-03-12T20:37:43.988+0000] {processor.py:161} INFO - Started process (PID=803) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:37:43.989+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:37:43.990+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:37:43.990+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:37:44.599+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:37:44.616+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:37:44.616+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:37:44.631+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:37:44.631+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:37:44.646+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.661 seconds
+[2026-03-12T20:38:15.297+0000] {processor.py:161} INFO - Started process (PID=821) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:38:15.298+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:38:15.300+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:38:15.299+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:38:15.926+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:38:15.943+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:38:15.942+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:38:15.957+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:38:15.957+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:38:15.972+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.677 seconds
+[2026-03-12T20:38:35.500+0000] {processor.py:161} INFO - Started process (PID=840) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:38:35.501+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:38:35.502+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:38:35.502+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:38:36.196+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:38:36.260+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:38:36.260+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:38:36.274+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:38:36.274+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:38:36.293+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.795 seconds
+[2026-03-12T20:39:06.676+0000] {processor.py:161} INFO - Started process (PID=858) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:39:06.677+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:39:06.679+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:39:06.678+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:39:07.370+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:39:07.435+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:39:07.434+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:39:07.447+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:39:07.447+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:39:07.463+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.790 seconds
+[2026-03-12T20:47:20.119+0000] {processor.py:161} INFO - Started process (PID=60) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:47:20.120+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:47:20.122+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:47:20.122+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:47:21.498+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:47:21.630+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:47:21.629+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:47:21.644+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:47:21.644+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:47:21.669+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 1.553 seconds
+[2026-03-12T20:47:52.489+0000] {processor.py:161} INFO - Started process (PID=78) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:47:52.490+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:47:52.492+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:47:52.492+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:47:53.083+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:47:53.103+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:47:53.102+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:47:53.116+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:47:53.116+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:47:53.135+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.648 seconds
+[2026-03-12T20:48:23.783+0000] {processor.py:161} INFO - Started process (PID=96) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:48:23.784+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:48:23.786+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:48:23.786+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:48:24.422+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:48:24.439+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:48:24.438+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:48:24.453+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:48:24.453+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:48:24.466+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.685 seconds
+[2026-03-12T20:48:55.074+0000] {processor.py:161} INFO - Started process (PID=114) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:48:55.075+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:48:55.077+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:48:55.077+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:48:55.690+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:48:55.706+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:48:55.706+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:48:55.720+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:48:55.720+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:48:55.733+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.662 seconds
+[2026-03-12T20:49:26.379+0000] {processor.py:161} INFO - Started process (PID=132) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:49:26.380+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:49:26.381+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:49:26.381+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:49:27.001+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:49:27.018+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:49:27.018+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:49:27.033+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:49:27.033+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:49:27.051+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.675 seconds
+[2026-03-12T20:49:57.694+0000] {processor.py:161} INFO - Started process (PID=150) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:49:57.695+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:49:57.696+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:49:57.696+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:49:58.312+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:49:58.330+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:49:58.330+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:49:58.347+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:49:58.347+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:49:58.363+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.672 seconds
+[2026-03-12T20:50:29.006+0000] {processor.py:161} INFO - Started process (PID=168) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:50:29.007+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T20:50:29.009+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:50:29.009+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:50:29.920+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T20:50:29.936+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:50:29.936+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T20:50:29.950+0000] {logging_mixin.py:188} INFO - [2026-03-12T20:50:29.949+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T20:50:29.966+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.962 seconds
