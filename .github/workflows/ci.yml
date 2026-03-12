@@ -34,10 +34,6 @@ jobs:
           import os
           from datetime import datetime
 
-          print("=" * 50)
-          print("SKAPAR TESTMODELL")
-          print("=" * 50)
-
           X_train = np.array([[0,0], [1,1], [0,0], [1,1]])
           y_train = np.array([0,1,0,1])
           model = RandomForestClassifier(n_estimators=10)
@@ -46,13 +42,8 @@ jobs:
           timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
           model_path = f"models/production/endpoint_model_{timestamp}.pkl"
           joblib.dump(model, model_path)
-
-          print(f"✓ Modell sparad: {model_path}")
-          print(f"✓ Finns filen? {os.path.exists(model_path)}")
+          print(f"Modell sparad: {model_path}")
           '
-          
-      - name: List model files
-        run: ls -la models/production/
           
       - name: Start API and run tests
         run: |
@@ -64,11 +55,9 @@ jobs:
           sleep 5
           
           # Testa att API:et är igång
-          echo "=== TESTAR HEALTH ENDPOINT ==="
           curl -f http://localhost:8000/health || exit 1
           
           # Kör testerna
-          echo "=== KÖR PYTEST ==="
           pytest tests/ -v
           
           # Stäng API

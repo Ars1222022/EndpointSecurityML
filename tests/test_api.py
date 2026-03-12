@@ -1,22 +1,39 @@
-import pytest
-from fastapi.testclient import TestClient
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from src.api.app import app
+"""
+tests/test_api.py - Enhetstester för API:et
+"""
 
-client = TestClient(app)
+import pytest
+import requests
+import os
+
+# Använd den riktiga API-URL:en (när den körs)
+API_URL = "http://localhost:8000"
 
 def test_health():
-    response = client.get("/health")
+    """Testar att health endpoint fungerar"""
+    response = requests.get(f"{API_URL}/health")
     assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "ok"
 
 def test_predict_normal():
-    response = client.post("/predict", json={"NetworkConnections": 0, "ProcessName": "notepad.exe"})
+    """Testar prediktion med normal process"""
+    response = requests.post(
+        f"{API_URL}/predict",
+        json={"NetworkConnections": 0, "ProcessName": "notepad.exe"}
+    )
     assert response.status_code == 200
-    assert response.json()["prediction"] == 0
+    data = response.json()
+    assert data["prediction"] == 0
+    assert data["threat_type"] == "Normal"
 
 def test_predict_attack():
-    response = client.post("/predict", json={"NetworkConnections": 1, "ProcessName": "powershell.exe"})
+    """Testar prediktion med misstänkt process"""
+    response = requests.post(
+        f"{API_URL}/predict",
+        json={"NetworkConnections": 1, "ProcessName": "powershell.exe"}
+    )
     assert response.status_code == 200
-    assert response.json()["prediction"] == 1
+    data = response.json()
+    assert data["prediction"] == 1
+    assert data["threat_type"] == "Attack"
