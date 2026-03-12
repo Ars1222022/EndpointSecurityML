@@ -24,7 +24,12 @@ jobs:
           mkdir -p data/raw
           mkdir -p models/production
           
-      - name: Train test model
+      - name: Copy existing models
+        run: |
+          # Skapa mapparna och kopiera inget (vi använder ingen modell för test)
+          # Istället skapar vi en testmodell direkt
+          
+      - name: Create test model
         run: |
           python -c '
           import pandas as pd
@@ -32,14 +37,20 @@ jobs:
           from sklearn.ensemble import RandomForestClassifier
           import joblib
           import os
+          from datetime import datetime
 
+          # Skapa en minimal testmodell
           X_train = np.array([[0,0], [1,1], [0,0], [1,1]])
           y_train = np.array([0,1,0,1])
+
           model = RandomForestClassifier(n_estimators=10)
           model.fit(X_train, y_train)
-          os.makedirs("models/production", exist_ok=True)
-          joblib.dump(model, "models/production/test_model.pkl")
-          print("Testmodell sparad i models/production/test_model.pkl")
+
+          # Spara med rätt format
+          timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+          model_path = f"models/production/endpoint_model_{timestamp}.pkl"
+          joblib.dump(model, model_path)
+          print(f"Testmodell sparad: {model_path}")
           '
           
       - name: List model files
