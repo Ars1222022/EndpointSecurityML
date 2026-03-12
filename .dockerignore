@@ -1,0 +1,12 @@
+*.mdf
+*.ldf
+*.bak
+*.log
+__pycache__/
+*.pyc
+.git
+.gitignore
+.vscode
+.idea
+mlruns/
+data/raw/*.csv

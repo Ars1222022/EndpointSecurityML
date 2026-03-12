@@ -1,0 +1,13 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+RUN pip install fastapi uvicorn joblib numpy
+
+COPY src/api/app.py src/api/app.py
+COPY src/api/utils.py src/api/utils.py
+COPY src/api/models.py src/api/models.py
+
+EXPOSE 8000
+
+CMD ["uvicorn", "src.api.app:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -26,3 +26,15 @@ dvc_cache/
 .dvc/tmp/
 *.mdf
 *.ldf
+
+# MLflow
+mlruns/
+mlartifacts/
+
+# MLflow
+mlruns/
+mlartifacts/
+
+# MLflow
+mlruns/
+mlartifacts/
