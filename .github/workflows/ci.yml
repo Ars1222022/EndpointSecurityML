@@ -10,10 +10,39 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: |
+          
+      - name: Install dependencies
+        run: |
           pip install -r requirements.txt
-          pytest tests/ -v
+          
+      - name: Create test data directory
+        run: mkdir -p data/raw
+          
+      - name: Train test model
+        run: |
+          python -c "
+          import pandas as pd
+          import numpy as np
+          from sklearn.ensemble import RandomForestClassifier
+          import joblib
+          import os
+
+          # Skapa minimal träningsdata
+          X_train = np.array([[0,0], [1,1], [0,0], [1,1]])
+          y_train = np.array([0,1,0,1])
+
+          model = RandomForestClassifier(n_estimators=10)
+          model.fit(X_train, y_train)
+
+          os.makedirs('models/production', exist_ok=True)
+          joblib.dump(model, 'models/production/test_model.pkl')
+          print('Testmodell skapad')
+          "
+          
+      - name: Run tests
+        run: pytest tests/ -v
