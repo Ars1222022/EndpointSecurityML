@@ -24,11 +24,6 @@ jobs:
           mkdir -p data/raw
           mkdir -p models/production
           
-      - name: Copy existing models
-        run: |
-          # Skapa mapparna och kopiera inget (vi använder ingen modell för test)
-          # Istället skapar vi en testmodell direkt
-          
       - name: Create test model
         run: |
           python -c '
@@ -39,22 +34,31 @@ jobs:
           import os
           from datetime import datetime
 
-          # Skapa en minimal testmodell
+          print("Skapar testmodell...")
           X_train = np.array([[0,0], [1,1], [0,0], [1,1]])
           y_train = np.array([0,1,0,1])
 
           model = RandomForestClassifier(n_estimators=10)
           model.fit(X_train, y_train)
 
-          # Spara med rätt format
           timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
           model_path = f"models/production/endpoint_model_{timestamp}.pkl"
           joblib.dump(model, model_path)
           print(f"Testmodell sparad: {model_path}")
+
+          # Visa absolut sökväg
+          import os
+          print(f"Absolut sökväg: {os.path.abspath(model_path)}")
           '
           
-      - name: List model files
-        run: ls -la models/production/
+      - name: Debug - List all files
+        run: |
+          echo "=== models/production ==="
+          ls -la models/production/
+          echo "=== Current directory ==="
+          pwd
+          echo "=== Full tree ==="
+          find . -type f -name "*.pkl" | head -20
           
       - name: Run tests
-        run: pytest tests/ -v
+        run: pytest tests/ -v -s
