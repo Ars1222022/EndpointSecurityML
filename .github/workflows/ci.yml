@@ -17,8 +17,7 @@ jobs:
           python-version: '3.11'
           
       - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
+        run: pip install -r requirements.txt
           
       - name: Create directories
         run: |
@@ -27,28 +26,24 @@ jobs:
           
       - name: Train test model
         run: |
-          python -c "
+          python -c '
           import pandas as pd
           import numpy as np
           from sklearn.ensemble import RandomForestClassifier
           import joblib
           import os
 
-          # Skapa minimal träningsdata
           X_train = np.array([[0,0], [1,1], [0,0], [1,1]])
           y_train = np.array([0,1,0,1])
-
           model = RandomForestClassifier(n_estimators=10)
           model.fit(X_train, y_train)
-
-          # Spara modellen på rätt plats
-          os.makedirs('models/production', exist_ok=True)
-          joblib.dump(model, 'models/production/test_model.pkl')
-          print('Testmodell sparad i models/production/test_model.pkl')
-          "
-                    
-                - name: Run tests
-                  run: |
-          # Visa att modellen finns
-          ls -la models/production/
-          pytest tests/ -v
+          os.makedirs("models/production", exist_ok=True)
+          joblib.dump(model, "models/production/test_model.pkl")
+          print("Testmodell sparad i models/production/test_model.pkl")
+          '
+          
+      - name: List model files
+        run: ls -la models/production/
+          
+      - name: Run tests
+        run: pytest tests/ -v
