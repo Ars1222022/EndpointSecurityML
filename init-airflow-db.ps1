@@ -41,7 +41,7 @@ docker-compose up -d airflow-webserver airflow-scheduler airflow-worker
 # 5. Vänta att de startar
 Start-Sleep -Seconds 20
 
-# 6. Installera scikit-learn i alla containers
+# 6. Installera scikit-learn i alla containers (Airflow-version 1.2.2)
 Write-Host "5️⃣ Installerar scikit-learn i Airflow-containers..." -ForegroundColor Yellow
 docker exec endpointsecurityml-airflow-webserver-1 pip install scikit-learn==1.2.2 pandas==2.0.3 numpy==1.23.5 joblib==1.2.0
 docker exec endpointsecurityml-airflow-scheduler-1 pip install scikit-learn==1.2.2 pandas==2.0.3 numpy==1.23.5 joblib==1.2.0
