@@ -48,16 +48,13 @@ jobs:
           joblib.dump(model, model_path)
 
           print(f"✓ Modell sparad: {model_path}")
-          print(f"✓ Absolut sökväg: {os.path.abspath(model_path)}")
           print(f"✓ Finns filen? {os.path.exists(model_path)}")
           '
           
-      - name: Debug - List all model files
-        run: |
-          echo "=== ALLA .pkl FILER ==="
-          find . -name "*.pkl" -type f | xargs ls -la
+      - name: List model files
+        run: ls -la models/production/
           
-      - name: Debug - Test API direkt
+      - name: Start API and run tests
         run: |
           # Starta API i bakgrunden
           uvicorn src.api.app:app --host 0.0.0.0 --port 8000 &
@@ -66,13 +63,13 @@ jobs:
           # Vänta på att API startar
           sleep 5
           
-          # Testa health endpoint
+          # Testa att API:et är igång
           echo "=== TESTAR HEALTH ENDPOINT ==="
-          curl -f http://localhost:8000/health || echo "Health endpoint failed"
+          curl -f http://localhost:8000/health || exit 1
           
-          # Visa API-loggar
-          echo "=== API LOGGAR ==="
-          kill -0 $API_PID 2>/dev/null && echo "API körs" || echo "API är stoppat"
+          # Kör testerna
+          echo "=== KÖR PYTEST ==="
+          pytest tests/ -v
           
-      - name: Run tests
-        run: pytest tests/ -v
+          # Stäng API
+          kill $API_PID
