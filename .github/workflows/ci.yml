@@ -45,20 +45,13 @@ jobs:
           print(f"Modell sparad: {model_path}")
           '
           
-      - name: Start API and run tests
+      - name: Start API
         run: |
-          # Starta API i bakgrunden
           uvicorn src.api.app:app --host 0.0.0.0 --port 8000 &
-          API_PID=$!
-          
-          # Vänta på att API startar
           sleep 5
           
-          # Testa att API:et är igång
-          curl -f http://localhost:8000/health || exit 1
+      - name: Test health endpoint
+        run: curl -f http://localhost:8000/health || exit 1
           
-          # Kör testerna
-          pytest tests/ -v
-          
-          # Stäng API
-          kill 
+      - name: Run tests
+        run: pytest tests/ -v
