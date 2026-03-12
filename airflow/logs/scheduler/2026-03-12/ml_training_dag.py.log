@@ -1048,3 +1048,10 @@ ModuleNotFoundError: No module named 'sklearn'
 [2026-03-12T21:25:42.705+0000] {logging_mixin.py:188} INFO - [2026-03-12T21:25:42.705+0000] {dag.py:3036} INFO - Sync 1 DAGs
 [2026-03-12T21:25:42.720+0000] {logging_mixin.py:188} INFO - [2026-03-12T21:25:42.720+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
 [2026-03-12T21:25:42.738+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.689 seconds
+[2026-03-12T21:26:13.339+0000] {processor.py:161} INFO - Started process (PID=78) to work on /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T21:26:13.340+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/ml_training_dag.py for tasks to queue
+[2026-03-12T21:26:13.342+0000] {logging_mixin.py:188} INFO - [2026-03-12T21:26:13.341+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T21:26:14.065+0000] {processor.py:840} INFO - DAG(s) 'ml_training' retrieved from /opt/airflow/dags/ml_training_dag.py
+[2026-03-12T21:26:14.083+0000] {logging_mixin.py:188} INFO - [2026-03-12T21:26:14.082+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-03-12T21:26:14.099+0000] {logging_mixin.py:188} INFO - [2026-03-12T21:26:14.099+0000] {dag.py:3823} INFO - Setting next_dagrun for ml_training to 2026-03-12 03:00:00+00:00, run_after=2026-03-13 03:00:00+00:00
+[2026-03-12T21:26:14.114+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/ml_training_dag.py took 0.778 seconds
