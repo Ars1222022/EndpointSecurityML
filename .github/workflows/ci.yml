@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install psutil  # Explicit install
+          pip install psutil
           
       - name: Create directories
         run: |
@@ -47,10 +47,29 @@ jobs:
           print(f"Modell sparad: {model_path}")
           '
           
-      - name: Start API (using app_ci.py)
+      - name: Start API with debug
         run: |
+          echo "Starting API..."
           uvicorn src.api.app_ci:app --host 0.0.0.0 --port 8000 &
+          API_PID=$!
+          echo "API PID: $API_PID"
+          
+          echo "Waiting 5 seconds..."
           sleep 5
+          
+          echo "Checking if process is running..."
+          ps aux | grep uvicorn
+          
+          echo "Testing health endpoint..."
+          curl -v http://localhost:8000/health || echo "Health endpoint failed"
+          
+          echo "Checking if process is still alive..."
+          kill -0 $API_PID 2>/dev/null && echo "✅ API is running" || echo "❌ API crashed"
+          
+          if ! kill -0 $API_PID 2>/dev/null; then
+            echo "API crashed - showing last 50 lines of nohup.out:"
+            tail -50 nohup.out 2>/dev/null || echo "No nohup.out file"
+          fi
           
       - name: Test health endpoint
         run: curl -f http://localhost:8000/health || exit 1
