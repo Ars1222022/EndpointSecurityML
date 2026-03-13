@@ -223,9 +223,96 @@ Write-Host "  ✅ app.py uppdaterad med FIXADE metric-namn" -ForegroundColor Gre
 Write-Host ""
 
 # ------------------------------
-# 5. UPPDATERA REQUIREMENTS.TXT MED PSUTIL
+# 5. SKAPA ENKLARE APP.PY FÖR CI (NYTT!)
 # ------------------------------
-Write-Host "4️⃣ Uppdaterar requirements.txt med psutil..." -ForegroundColor Yellow
+Write-Host "4️⃣ Skapar enklare app_ci.py för GitHub Actions..." -ForegroundColor Yellow
+
+$appCiPy = @'
+"""
+app_ci.py - Enklare API för CI-miljö (utan psutil)
+"""
+
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import Response
+import joblib
+import os
+import time
+from prometheus_client import Counter, Histogram, generate_latest, REGISTRY
+from .models import PredictionRequest, PredictionResponse, HealthResponse
+from .utils import find_latest_model, prepare_features, get_threat_type
+
+# Grundläggande metrics (inga psutil-beroende)
+REQUEST_COUNT = Counter('http_requests_total', 'Totala antalet anrop', ['method', 'endpoint', 'status'])
+REQUEST_LATENCY = Histogram('http_request_duration_seconds', 'Svarstider i sekunder', ['method', 'endpoint'])
+PREDICTION_COUNT = Counter('predictions_total', 'Antal prediktioner', ['threat_type'])
+MODEL_INFO = Counter('model_info', 'Information om modellen', ['version'])
+
+app = FastAPI(title="Endpoint Security ML API (CI)")
+
+model = None
+model_version = None
+
+@app.middleware("http")
+async def monitor_requests(request: Request, call_next):
+    method = request.method
+    endpoint = request.url.path
+    start_time = time.time()
+    response = await call_next(request)
+    duration = time.time() - start_time
+    REQUEST_COUNT.labels(method=method, endpoint=endpoint, status=response.status_code).inc()
+    REQUEST_LATENCY.labels(method=method, endpoint=endpoint).observe(duration)
+    return response
+
+@app.on_event("startup")
+async def load_model():
+    global model, model_version
+    model_path = find_latest_model()
+    if model_path:
+        model = joblib.load(model_path)
+        model_version = os.path.basename(model_path).replace("endpoint_model_", "").replace(".pkl", "")
+        print(f"✅ Modell laddad: {model_path}")
+        if model_version:
+            MODEL_INFO.labels(version=model_version).inc()
+
+@app.get("/health", response_model=HealthResponse)
+async def health_check():
+    return HealthResponse(status="ok", model_loaded=model is not None, model_version=model_version)
+
+@app.post("/predict", response_model=PredictionResponse)
+async def predict(request: PredictionRequest):
+    if model is None:
+        raise HTTPException(status_code=503, detail="Ingen modell laddad")
+    features = prepare_features(request.NetworkConnections, request.ProcessName)
+    pred = int(model.predict(features)[0])
+    conf = float(model.predict_proba(features).max())
+    threat = get_threat_type(pred)
+    PREDICTION_COUNT.labels(threat_type=threat).inc()
+    if model_version:
+        MODEL_INFO.labels(version=model_version).inc()
+    return PredictionResponse(
+        prediction=pred,
+        confidence=conf,
+        threat_type=threat,
+        model_version=model_version if model_version else "unknown"
+    )
+
+@app.get("/metrics")
+async def get_metrics():
+    return Response(content=generate_latest(REGISTRY), media_type="text/plain")
+
+@app.get("/")
+async def root():
+    return {"message": "Endpoint Security ML API (CI version)"}
+'@
+
+Set-Content -Path (Join-Path $apiDir "app_ci.py") -Value $appCiPy -Encoding UTF8
+Write-Host "  ✅ app_ci.py skapad för CI-miljö" -ForegroundColor Green
+Write-Host ""
+
+# ------------------------------
+# 6. UPPDATERA REQUIREMENTS.TXT MED PSUTIL
+# ------------------------------
+Write-Host "5️⃣ Uppdaterar requirements.txt med psutil..." -ForegroundColor Yellow
 
 $reqPath = Join-Path $ProjectRoot "requirements.txt"
 Add-Content -Path $reqPath -Value "`npsutil==5.9.5" -Encoding UTF8
@@ -233,33 +320,23 @@ Write-Host "  ✅ psutil tillagt i requirements.txt" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 6. UPPDATERA DOCKERFILE.API (MED BÅDA PAKETEN)
+# 7. UPPDATERA DOCKERFILE.API (MED BÅDA PAKETEN)
 # ------------------------------
-Write-Host "5️⃣ Uppdaterar Dockerfile.api med prometheus-client och psutil..." -ForegroundColor Yellow
+Write-Host "6️⃣ Uppdaterar Dockerfile.api med prometheus-client och psutil..." -ForegroundColor Yellow
 
 $dockerfilePath = Join-Path $ProjectRoot "Dockerfile.api"
-$dockerfileContent = Get-Content $dockerfilePath -Raw
-
-# Skapa ny korrekt Dockerfile.api
 $newDockerfile = @'
 FROM python:3.9-slim
-
 WORKDIR /app
-
 RUN apt-get update && apt-get install -y gcc curl && rm -rf /var/lib/apt/lists/*
-
 RUN pip install --no-cache-dir numpy==1.23.5
 RUN pip install --no-cache-dir pandas==2.0.3
 RUN pip install --no-cache-dir scikit-learn==1.2.2 joblib==1.2.0
 RUN pip install --no-cache-dir fastapi==0.104.1 uvicorn[standard]==0.24.0 pydantic==2.5.0
 RUN pip install --no-cache-dir prometheus-client psutil
-
 COPY . .
-
 RUN mkdir -p /app/models/production /app/src/api
-
 EXPOSE 8000
-
 CMD ["uvicorn", "src.api.app:app", "--host", "0.0.0.0", "--port", "8000"]
 '@
 
@@ -268,14 +345,13 @@ Write-Host "  ✅ Dockerfile.api uppdaterad med prometheus-client och psutil" -F
 Write-Host ""
 
 # ------------------------------
-# 7. UPPDATERA DOCKER-COMPOSE.YML (OM DET BEHÖVS)
+# 8. UPPDATERA DOCKER-COMPOSE.YML (SOM VANLIGT)
 # ------------------------------
-Write-Host "6️⃣ Uppdaterar docker-compose.yml..." -ForegroundColor Yellow
+Write-Host "7️⃣ Uppdaterar docker-compose.yml..." -ForegroundColor Yellow
 
 $composePath = Join-Path $ProjectRoot "docker-compose.yml"
 $composeContent = Get-Content $composePath -Raw
 
-# Kolla om Prometheus och Grafana redan finns
 if ($composeContent -notmatch "prometheus:") {
     $monitoringServices = @'
 
@@ -309,73 +385,64 @@ volumes:
   grafana_data:
 '@
 
-    # Lägg till i docker-compose
     $composeContent = $composeContent.TrimEnd() + "`r`n" + $monitoringServices.TrimStart()
     
-    # Fixa volumes om det redan finns
     if ($composeContent -match "volumes:\s*\n\s*postgres_data:") {
         $composeContent = $composeContent -replace "(volumes:\s*\n\s*postgres_data:)", "`$1`r`n  grafana_data:"
     }
     
     Set-Content -Path $composePath -Value $composeContent -Encoding UTF8
-    Write-Host "  ✅ docker-compose.yml uppdaterad med Prometheus och Grafana" -ForegroundColor Green
+    Write-Host "  ✅ docker-compose.yml uppdaterad" -ForegroundColor Green
 } else {
     Write-Host "  ✅ docker-compose.yml redan uppdaterad" -ForegroundColor Green
 }
 Write-Host ""
 
 # ------------------------------
-# 8. RENSA LOGG-PROBLEM
+# 9. RENSA LOGG-PROBLEM (OFÖRÄNDRAT)
 # ------------------------------
-Write-Host "7️⃣ Rensar eventuella logg-problem..." -ForegroundColor Yellow
-
-# Stoppa containers först
+Write-Host "8️⃣ Rensar eventuella logg-problem..." -ForegroundColor Yellow
 docker-compose down
-
-# Hantera Airflow-logs
 if (Test-Path "airflow/logs") {
     try {
         Rename-Item -Path "airflow/logs" -NewName "airflow/logs_backup" -Force -ErrorAction Stop
         Write-Host "  ✅ Gammal logs-mapp bytt namn" -ForegroundColor Green
     } catch {
-        Write-Host "  ⚠️ Kunde inte byta namn, försöker ta bort..." -ForegroundColor Yellow
         Remove-Item -Path "airflow/logs" -Recurse -Force -ErrorAction SilentlyContinue
     }
 }
-
-# Skapa ny logs-mapp
 New-Item -ItemType Directory -Path "airflow/logs" -Force | Out-Null
 Write-Host "  ✅ Ny logs-mapp skapad" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 9. BYGG OM API (MED --NO-CACHE)
+# 10. BYGG OM API (OFÖRÄNDRAT)
 # ------------------------------
-Write-Host "8️⃣ Bygger om API med nya paket (--no-cache)..." -ForegroundColor Yellow
+Write-Host "9️⃣ Bygger om API med nya paket (--no-cache)..." -ForegroundColor Yellow
 docker-compose build --no-cache api
 Write-Host "  ✅ API byggt" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 10. STARTA ALLA CONTAINERS
+# 11. STARTA ALLA CONTAINERS (OFÖRÄNDRAT)
 # ------------------------------
-Write-Host "9️⃣ Startar alla containers..." -ForegroundColor Yellow
+Write-Host "🔟 Startar alla containers..." -ForegroundColor Yellow
 docker-compose up -d
 Write-Host "  ✅ Containers startade" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 11. INSTALLERA PAKET LOKALT (för VS Code)
+# 12. INSTALLERA PAKET LOKALT (OFÖRÄNDRAT)
 # ------------------------------
-Write-Host "🔟 Installerar paket lokalt (för VS Code)..." -ForegroundColor Yellow
+Write-Host "1️⃣1️⃣ Installerar paket lokalt (för VS Code)..." -ForegroundColor Yellow
 pip install prometheus-client psutil
 Write-Host "  ✅ Paket installerade lokalt" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 12. SKAPA TEST-SKRIPT
+# 13. SKAPA TEST-SKRIPT (OFÖRÄNDRAT)
 # ------------------------------
-Write-Host "1️⃣1️⃣ Skapar test-monitoring.ps1..." -ForegroundColor Yellow
+Write-Host "1️⃣2️⃣ Skapar test-monitoring.ps1..." -ForegroundColor Yellow
 
 $testScript = @'
 # =====================================================
@@ -428,7 +495,7 @@ Write-Host "  ✅ test-monitoring.ps1 skapad" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 13. KLAR!
+# 14. KLAR! (OFÖRÄNDRAT)
 # ------------------------------
 Write-Host "==========================================================" -ForegroundColor Cyan
 Write-Host "✅ PROMETHEUS & GRAFANA SETUP KLAR!" -ForegroundColor Green
