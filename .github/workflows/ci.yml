@@ -17,7 +17,9 @@ jobs:
           python-version: '3.11'
           
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+          pip install psutil  # Lägg till psutil explicit
           
       - name: Create directories
         run: |
@@ -48,7 +50,7 @@ jobs:
       - name: Start API
         run: |
           uvicorn src.api.app:app --host 0.0.0.0 --port 8000 &
-          sleep 5
+          sleep 10  # Öka till 10 sekunder
           
       - name: Test health endpoint
         run: curl -f http://localhost:8000/health || exit 1
