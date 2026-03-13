@@ -399,9 +399,119 @@ volumes:
 Write-Host ""
 
 # ------------------------------
-# 9. RENSA LOGG-PROBLEM (OFÖRÄNDRAT)
+# 9. UPPDATERA CI.YML (NYTT!)
 # ------------------------------
-Write-Host "8️⃣ Rensar eventuella logg-problem..." -ForegroundColor Yellow
+Write-Host "8️⃣ Uppdaterar ci.yml för GitHub Actions..." -ForegroundColor Yellow
+
+$ciPath = Join-Path $ProjectRoot ".github" "workflows" "ci.yml"
+New-Item -ItemType Directory -Path (Join-Path $ProjectRoot ".github" "workflows") -Force | Out-Null
+
+$newCiYml = @'
+name: CI - Build and Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install fastapi uvicorn httpx prometheus-client
+          
+      - name: Create directories
+        run: |
+          mkdir -p data/raw
+          mkdir -p models/production
+          
+      - name: Create test model
+        run: |
+          python -c '
+          import pandas as pd
+          import numpy as np
+          from sklearn.ensemble import RandomForestClassifier
+          import joblib
+          import os
+          from datetime import datetime
+
+          X_train = np.array([[0,0], [1,1], [0,0], [1,1]])
+          y_train = np.array([0,1,0,1])
+          model = RandomForestClassifier(n_estimators=10, random_state=42)
+          model.fit(X_train, y_train)
+
+          timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+          model_path = f"models/production/endpoint_model_{timestamp}.pkl"
+          joblib.dump(model, model_path)
+          print(f"✅ Modell sparad: {model_path}")
+          '
+          
+      - name: Start API
+        run: |
+          uvicorn src.api.app_ci:app --host 0.0.0.0 --port 8000 &
+          sleep 5
+          
+      - name: Test API health
+        run: |
+          curl -f http://localhost:8000/health || exit 1
+          
+      - name: Test model directly
+        run: |
+          python -c '
+          import joblib
+          import glob
+          import os
+          
+          model_files = glob.glob("models/production/*.pkl")
+          latest = max(model_files, key=os.path.getctime)
+          print(f"✅ Laddar modell: {latest}")
+          
+          model = joblib.load(latest)
+          print(f"✅ Modell laddad - OK")
+          
+          test_cases = [
+              ([0,0], 0),
+              ([1,1], 1)
+          ]
+          
+          for features, expected in test_cases:
+              pred = model.predict([features])[0]
+              assert pred == expected, f"Fel: {features} gav {pred}, förväntat {expected}"
+              print(f"✅ Test OK: {features} -> {pred}")
+          '
+          
+      - name: Test utility functions
+        run: |
+          python -c '
+          import sys
+          import os
+          sys.path.append("src")
+          from api.utils import get_threat_type, prepare_features
+          
+          assert get_threat_type(0) == "Normal"
+          assert get_threat_type(1) == "Attack"
+          print("✅ Utility functions OK")
+          '
+'@
+
+Set-Content -Path $ciPath -Value $newCiYml -Encoding UTF8
+Write-Host "  ✅ ci.yml uppdaterad för GitHub Actions" -ForegroundColor Green
+Write-Host ""
+
+# ------------------------------
+# 10. RENSA LOGG-PROBLEM (OFÖRÄNDRAT)
+# ------------------------------
+Write-Host "9️⃣ Rensar eventuella logg-problem..." -ForegroundColor Yellow
 docker-compose down
 if (Test-Path "airflow/logs") {
     try {
@@ -416,33 +526,33 @@ Write-Host "  ✅ Ny logs-mapp skapad" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 10. BYGG OM API (OFÖRÄNDRAT)
+# 11. BYGG OM API (OFÖRÄNDRAT)
 # ------------------------------
-Write-Host "9️⃣ Bygger om API med nya paket (--no-cache)..." -ForegroundColor Yellow
+Write-Host "🔟 Bygger om API med nya paket (--no-cache)..." -ForegroundColor Yellow
 docker-compose build --no-cache api
 Write-Host "  ✅ API byggt" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 11. STARTA ALLA CONTAINERS (OFÖRÄNDRAT)
+# 12. STARTA ALLA CONTAINERS (OFÖRÄNDRAT)
 # ------------------------------
-Write-Host "🔟 Startar alla containers..." -ForegroundColor Yellow
+Write-Host "1️⃣1️⃣ Startar alla containers..." -ForegroundColor Yellow
 docker-compose up -d
 Write-Host "  ✅ Containers startade" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 12. INSTALLERA PAKET LOKALT (OFÖRÄNDRAT)
+# 13. INSTALLERA PAKET LOKALT (OFÖRÄNDRAT)
 # ------------------------------
-Write-Host "1️⃣1️⃣ Installerar paket lokalt (för VS Code)..." -ForegroundColor Yellow
+Write-Host "1️⃣2️⃣ Installerar paket lokalt (för VS Code)..." -ForegroundColor Yellow
 pip install prometheus-client psutil
 Write-Host "  ✅ Paket installerade lokalt" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 13. SKAPA TEST-SKRIPT (OFÖRÄNDRAT)
+# 14. SKAPA TEST-SKRIPT (OFÖRÄNDRAT)
 # ------------------------------
-Write-Host "1️⃣2️⃣ Skapar test-monitoring.ps1..." -ForegroundColor Yellow
+Write-Host "1️⃣3️⃣ Skapar test-monitoring.ps1..." -ForegroundColor Yellow
 
 $testScript = @'
 # =====================================================
@@ -495,11 +605,21 @@ Write-Host "  ✅ test-monitoring.ps1 skapad" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 14. KLAR! (OFÖRÄNDRAT)
+# 15. KLAR! (OFÖRÄNDRAT)
 # ------------------------------
 Write-Host "==========================================================" -ForegroundColor Cyan
 Write-Host "✅ PROMETHEUS & GRAFANA SETUP KLAR!" -ForegroundColor Green
 Write-Host "==========================================================" -ForegroundColor Cyan
+Write-Host ""
+Write-Host "📋 ALLA FILER UPPDATERADE:" -ForegroundColor Yellow
+Write-Host "  • app.py - med full metrics" -ForegroundColor White
+Write-Host "  • app_ci.py - för CI-miljö" -ForegroundColor White
+Write-Host "  • requirements.txt - med psutil" -ForegroundColor White
+Write-Host "  • Dockerfile.api - med båda paketen" -ForegroundColor White
+Write-Host "  • docker-compose.yml - med Prometheus/Grafana" -ForegroundColor White
+Write-Host "  • ci.yml - uppdaterad för GitHub Actions" -ForegroundColor White
+Write-Host "  • prometheus.yml - konfiguration" -ForegroundColor White
+Write-Host "  • dashboard.json - Grafana dashboard" -ForegroundColor White
 Write-Host ""
 Write-Host "📋 DINA NYA TJÄNSTER MED EXTRA METRICS:" -ForegroundColor Yellow
 Write-Host "  • Prometheus: http://localhost:9090" -ForegroundColor White
