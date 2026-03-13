@@ -47,16 +47,15 @@ jobs:
           print(f"Modell sparad: {model_path}")
           '
           
-      - name: Start API in foreground (to see errors)
+      - name: Start API with error logging
         run: |
-          echo "Starting API..."
-          uvicorn src.api.app_ci:app --host 0.0.0.0 --port 8000 &
-          sleep 10
-          echo "API started (hopefully)"
-          
-      - name: Test health endpoint
-        run: |
-          curl -v http://localhost:8000/health || echo "Health endpoint failed"
+          echo "=== Starting API ==="
+          uvicorn src.api.app_ci:app --host 0.0.0.0 --port 8000 > api.log 2>&1 &
+          sleep 5
+          echo "=== API Logs ==="
+          cat api.log
+          echo "=== Testing connection ==="
+          curl -v http://localhost:8000/health || echo "Connection failed"
           
       - name: Run tests
         run: pytest tests/ -v
