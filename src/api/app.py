@@ -1,14 +1,56 @@
-"""app.py - Huvud-API för modellprediktioner"""
-from fastapi import FastAPI, HTTPException
+"""
+app.py - Huvud-API med Prometheus metrics (fixad version)
+"""
+
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import Response
 import joblib
 import os
+import time
+import psutil
+from prometheus_client import Counter, Histogram, Gauge, generate_latest, REGISTRY
 from .models import PredictionRequest, PredictionResponse, HealthResponse
 from .utils import find_latest_model, prepare_features, get_threat_type
+
+# ------------------------------
+# Prometheus metrics (med unika namn - inga konflikter)
+# ------------------------------
+REQUEST_COUNT = Counter('http_requests_total', 'Totala antalet anrop', ['method', 'endpoint', 'status'])
+REQUEST_LATENCY = Histogram('http_request_duration_seconds', 'Svarstider i sekunder', ['method', 'endpoint'])
+PREDICTION_COUNT = Counter('predictions_total', 'Antal prediktioner', ['threat_type'])
+MODEL_INFO = Counter('model_info', 'Information om modellen', ['version'])
+
+# Extra metrics (med unika namn som inte krockar)
+ERROR_COUNT = Counter('http_errors_total', 'Antal felanrop', ['method', 'endpoint'])
+CPU_USAGE = Gauge('app_cpu_seconds_total', 'Appens CPU-användning')  # Ändrat från process_cpu_seconds_total
+MEMORY_USAGE = Gauge('app_memory_bytes', 'Appens minnesanvändning')  # Ändrat namn för säkerhet
+PREDICTION_CONFIDENCE = Histogram('prediction_confidence', 'Modellens confidence-värden', buckets=(0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99, 1.0))
 
 app = FastAPI(title="Endpoint Security ML API")
 
 model = None
 model_version = None
+
+# ------------------------------
+# Middleware för metrics
+# ------------------------------
+@app.middleware("http")
+async def monitor_requests(request: Request, call_next):
+    method = request.method
+    endpoint = request.url.path
+    
+    start_time = time.time()
+    response = await call_next(request)
+    duration = time.time() - start_time
+    
+    REQUEST_COUNT.labels(method=method, endpoint=endpoint, status=response.status_code).inc()
+    REQUEST_LATENCY.labels(method=method, endpoint=endpoint).observe(duration)
+    
+    # Räkna fel (status >= 400)
+    if response.status_code >= 400:
+        ERROR_COUNT.labels(method=method, endpoint=endpoint).inc()
+    
+    return response
 
 @app.on_event("startup")
 async def load_model():
@@ -21,6 +63,8 @@ async def load_model():
             model = joblib.load(model_path)
             model_version = os.path.basename(model_path).replace("endpoint_model_", "").replace(".pkl", "")
             print(f"✅ Modell laddad: {model_path}")
+            if model_version:
+                MODEL_INFO.labels(version=model_version).inc()
         except Exception as e:
             print(f"❌ Kunde inte ladda modell: {e}")
     else:
@@ -42,13 +86,28 @@ async def predict(request: PredictionRequest):
     features = prepare_features(request.NetworkConnections, request.ProcessName)
     pred = int(model.predict(features)[0])
     conf = float(model.predict_proba(features).max())
+    threat = get_threat_type(pred)
+    
+    # Logga metrics
+    PREDICTION_COUNT.labels(threat_type=threat).inc()
+    PREDICTION_CONFIDENCE.observe(conf)
+    if model_version:
+        MODEL_INFO.labels(version=model_version).inc()
     
     return PredictionResponse(
         prediction=pred,
         confidence=conf,
-        threat_type=get_threat_type(pred),
-        model_version=model_version
+        threat_type=threat,
+        model_version=model_version if model_version else "unknown"
     )
+
+@app.get("/metrics")
+async def get_metrics():
+    # Uppdatera system metrics
+    CPU_USAGE.set(time.process_time())
+    MEMORY_USAGE.set(psutil.Process().memory_info().rss)
+    
+    return Response(content=generate_latest(REGISTRY), media_type="text/plain")
 
 @app.get("/")
 async def root():
@@ -56,5 +115,6 @@ async def root():
         "message": "Endpoint Security ML API",
         "docs": "/docs",
         "health": "/health",
+        "metrics": "/metrics",
         "predict": "/predict (POST)"
     }
