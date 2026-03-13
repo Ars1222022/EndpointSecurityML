@@ -50,12 +50,10 @@ jobs:
       - name: Start API with error logging
         run: |
           echo "=== Starting API ==="
-          uvicorn src.api.app_ci:app --host 0.0.0.0 --port 8000 > api.log 2>&1 &
+          uvicorn src.api.app_ci:app --host 0.0.0.0 --port 8000 &
           sleep 5
-          echo "=== API Logs ==="
-          cat api.log
           echo "=== Testing connection ==="
-          curl -v http://localhost:8000/health || echo "Connection failed"
+          curl -f http://localhost:8000/health || exit 1
           
       - name: Run tests
         run: pytest tests/ -v
