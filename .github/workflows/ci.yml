@@ -17,7 +17,9 @@ jobs:
           python-version: '3.11'
           
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+          pip install psutil  # Explicit install
           
       - name: Create directories
         run: |
@@ -45,9 +47,9 @@ jobs:
           print(f"Modell sparad: {model_path}")
           '
           
-      - name: Start API
+      - name: Start API (using app_ci.py)
         run: |
-          uvicorn src.api.app:app --host 0.0.0.0 --port 8000 &
+          uvicorn src.api.app_ci:app --host 0.0.0.0 --port 8000 &
           sleep 5
           
       - name: Test health endpoint
