@@ -22,8 +22,8 @@ MODEL_INFO = Counter('model_info', 'Information om modellen', ['version'])
 
 # Extra metrics (med unika namn som inte krockar)
 ERROR_COUNT = Counter('http_errors_total', 'Antal felanrop', ['method', 'endpoint'])
-CPU_USAGE = Gauge('app_cpu_seconds_total', 'Appens CPU-användning')  # Ändrat från process_cpu_seconds_total
-MEMORY_USAGE = Gauge('app_memory_bytes', 'Appens minnesanvändning')  # Ändrat namn för säkerhet
+CPU_USAGE = Gauge('app_cpu_seconds_total', 'Appens CPU-användning')
+MEMORY_USAGE = Gauge('app_memory_bytes', 'Appens minnesanvändning')
 PREDICTION_CONFIDENCE = Histogram('prediction_confidence', 'Modellens confidence-värden', buckets=(0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99, 1.0))
 
 app = FastAPI(title="Endpoint Security ML API")
@@ -46,7 +46,6 @@ async def monitor_requests(request: Request, call_next):
     REQUEST_COUNT.labels(method=method, endpoint=endpoint, status=response.status_code).inc()
     REQUEST_LATENCY.labels(method=method, endpoint=endpoint).observe(duration)
     
-    # Räkna fel (status >= 400)
     if response.status_code >= 400:
         ERROR_COUNT.labels(method=method, endpoint=endpoint).inc()
     
@@ -54,7 +53,6 @@ async def monitor_requests(request: Request, call_next):
 
 @app.on_event("startup")
 async def load_model():
-    """Laddar senaste modellen vid startup"""
     global model, model_version
     model_path = find_latest_model()
     
@@ -88,7 +86,6 @@ async def predict(request: PredictionRequest):
     conf = float(model.predict_proba(features).max())
     threat = get_threat_type(pred)
     
-    # Logga metrics
     PREDICTION_COUNT.labels(threat_type=threat).inc()
     PREDICTION_CONFIDENCE.observe(conf)
     if model_version:
@@ -103,10 +100,8 @@ async def predict(request: PredictionRequest):
 
 @app.get("/metrics")
 async def get_metrics():
-    # Uppdatera system metrics
     CPU_USAGE.set(time.process_time())
     MEMORY_USAGE.set(psutil.Process().memory_info().rss)
-    
     return Response(content=generate_latest(REGISTRY), media_type="text/plain")
 
 @app.get("/")

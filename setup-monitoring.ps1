@@ -40,51 +40,111 @@ Write-Host "  ✅ prometheus.yml skapad" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 3. SKAPA GRAFANA DASHBOARD (ENKEL VERSION SOM FUNGERAR)
+# 3. SKAPA GRAFANA DASHBOARD (AVANCERAD VERSION)
 # ------------------------------
-Write-Host "2️⃣ Skapar Grafana dashboard..." -ForegroundColor Yellow
+Write-Host "2️⃣ Skapar Grafana dashboard (avancerad)..." -ForegroundColor Yellow
 
 $grafanaDir = Join-Path $ProjectRoot "grafana"
 New-Item -ItemType Directory -Path $grafanaDir -Force | Out-Null
 
 $dashboardJson = @'
 {
-  "title": "ML API Monitoring",
-  "panels": [
-    {
-      "title": "Requests per second",
-      "targets": [{"expr": "rate(http_requests_total[1m])"}]
-    },
-    {
-      "title": "Response time (ms)",
-      "targets": [{"expr": "rate(http_request_duration_seconds_sum[1m]) / rate(http_request_duration_seconds_count[1m]) * 1000"}]
-    },
-    {
-      "title": "Predictions by type",
-      "targets": [{"expr": "predictions_total"}]
-    },
-    {
-      "title": "Error rate (%)",
-      "targets": [{"expr": "rate(http_errors_total[1m]) / rate(http_requests_total[1m]) * 100"}]
-    },
-    {
-      "title": "CPU Usage (%)",
-      "targets": [{"expr": "rate(app_cpu_seconds_total[1m]) * 100"}]
-    },
-    {
-      "title": "Memory Usage (MB)",
-      "targets": [{"expr": "app_memory_bytes / 1024 / 1024"}]
-    },
-    {
-      "title": "Prediction Confidence (95th percentile)",
-      "targets": [{"expr": "histogram_quantile(0.95, sum(rate(prediction_confidence_bucket[5m])) by (le))"}]
-    }
-  ]
+  "dashboard": {
+    "title": "ML API Monitoring",
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Requests per second",
+        "type": "timeseries",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+        "targets": [
+          {
+            "expr": "rate(http_requests_total[1m])",
+            "legendFormat": "{{method}} {{endpoint}}"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Response time (ms)",
+        "type": "timeseries",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+        "targets": [
+          {
+            "expr": "rate(http_request_duration_seconds_sum[1m]) / rate(http_request_duration_seconds_count[1m]) * 1000",
+            "legendFormat": "average"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Predictions by type",
+        "type": "piechart",
+        "gridPos": {"h": 8, "w": 8, "x": 0, "y": 8},
+        "targets": [
+          {
+            "expr": "predictions_total",
+            "legendFormat": "{{threat_type}}"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Error rate (%)",
+        "type": "timeseries",
+        "gridPos": {"h": 8, "w": 8, "x": 8, "y": 8},
+        "targets": [
+          {
+            "expr": "rate(http_errors_total[1m]) / rate(http_requests_total[1m]) * 100",
+            "legendFormat": "errors"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "CPU Usage (%)",
+        "type": "timeseries",
+        "gridPos": {"h": 8, "w": 8, "x": 16, "y": 8},
+        "targets": [
+          {
+            "expr": "rate(app_cpu_seconds_total[1m]) * 100",
+            "legendFormat": "CPU"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Memory Usage (MB)",
+        "type": "gauge",
+        "gridPos": {"h": 8, "w": 6, "x": 0, "y": 16},
+        "targets": [
+          {
+            "expr": "app_memory_bytes / 1024 / 1024",
+            "legendFormat": "memory"
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Prediction Confidence",
+        "type": "heatmap",
+        "gridPos": {"h": 8, "w": 18, "x": 6, "y": 16},
+        "targets": [
+          {
+            "expr": "prediction_confidence_bucket",
+            "legendFormat": "confidence"
+          }
+        ]
+      }
+    ]
+  },
+  "overwrite": true
 }
 '@
 
 Set-Content -Path (Join-Path $grafanaDir "dashboard.json") -Value $dashboardJson -Encoding UTF8
-Write-Host "  ✅ Grafana dashboard skapad (med 7 paneler)" -ForegroundColor Green
+Write-Host "  ✅ Grafana dashboard skapad (avancerad med 7 paneler)" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
@@ -120,8 +180,8 @@ MODEL_INFO = Counter('model_info', 'Information om modellen', ['version'])
 
 # Extra metrics (med unika namn som inte krockar)
 ERROR_COUNT = Counter('http_errors_total', 'Antal felanrop', ['method', 'endpoint'])
-CPU_USAGE = Gauge('app_cpu_seconds_total', 'Appens CPU-användning')  # Ändrat från process_cpu_seconds_total
-MEMORY_USAGE = Gauge('app_memory_bytes', 'Appens minnesanvändning')  # Ändrat namn för säkerhet
+CPU_USAGE = Gauge('app_cpu_seconds_total', 'Appens CPU-användning')
+MEMORY_USAGE = Gauge('app_memory_bytes', 'Appens minnesanvändning')
 PREDICTION_CONFIDENCE = Histogram('prediction_confidence', 'Modellens confidence-värden', buckets=(0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99, 1.0))
 
 app = FastAPI(title="Endpoint Security ML API")
@@ -144,7 +204,6 @@ async def monitor_requests(request: Request, call_next):
     REQUEST_COUNT.labels(method=method, endpoint=endpoint, status=response.status_code).inc()
     REQUEST_LATENCY.labels(method=method, endpoint=endpoint).observe(duration)
     
-    # Räkna fel (status >= 400)
     if response.status_code >= 400:
         ERROR_COUNT.labels(method=method, endpoint=endpoint).inc()
     
@@ -152,7 +211,6 @@ async def monitor_requests(request: Request, call_next):
 
 @app.on_event("startup")
 async def load_model():
-    """Laddar senaste modellen vid startup"""
     global model, model_version
     model_path = find_latest_model()
     
@@ -186,7 +244,6 @@ async def predict(request: PredictionRequest):
     conf = float(model.predict_proba(features).max())
     threat = get_threat_type(pred)
     
-    # Logga metrics
     PREDICTION_COUNT.labels(threat_type=threat).inc()
     PREDICTION_CONFIDENCE.observe(conf)
     if model_version:
@@ -201,10 +258,8 @@ async def predict(request: PredictionRequest):
 
 @app.get("/metrics")
 async def get_metrics():
-    # Uppdatera system metrics
     CPU_USAGE.set(time.process_time())
     MEMORY_USAGE.set(psutil.Process().memory_info().rss)
-    
     return Response(content=generate_latest(REGISTRY), media_type="text/plain")
 
 @app.get("/")
@@ -223,9 +278,9 @@ Write-Host "  ✅ app.py uppdaterad med FIXADE metric-namn" -ForegroundColor Gre
 Write-Host ""
 
 # ------------------------------
-# 5. SKAPA ENKLARE APP.PY FÖR CI (NYTT!)
+# 5. SKAPA ENKLARE APP_CI.PY FÖR GITHUB ACTIONS (NY!)
 # ------------------------------
-Write-Host "4️⃣ Skapar enklare app_ci.py för GitHub Actions..." -ForegroundColor Yellow
+Write-Host "4️⃣ Skapar app_ci.py för GitHub Actions..." -ForegroundColor Yellow
 
 $appCiPy = @'
 """
@@ -241,7 +296,6 @@ from prometheus_client import Counter, Histogram, generate_latest, REGISTRY
 from .models import PredictionRequest, PredictionResponse, HealthResponse
 from .utils import find_latest_model, prepare_features, get_threat_type
 
-# Grundläggande metrics (inga psutil-beroende)
 REQUEST_COUNT = Counter('http_requests_total', 'Totala antalet anrop', ['method', 'endpoint', 'status'])
 REQUEST_LATENCY = Histogram('http_request_duration_seconds', 'Svarstider i sekunder', ['method', 'endpoint'])
 PREDICTION_COUNT = Counter('predictions_total', 'Antal prediktioner', ['threat_type'])
@@ -306,7 +360,7 @@ async def root():
 '@
 
 Set-Content -Path (Join-Path $apiDir "app_ci.py") -Value $appCiPy -Encoding UTF8
-Write-Host "  ✅ app_ci.py skapad för CI-miljö" -ForegroundColor Green
+Write-Host "  ✅ app_ci.py skapad för GitHub Actions" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
@@ -320,9 +374,9 @@ Write-Host "  ✅ psutil tillagt i requirements.txt" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 7. UPPDATERA DOCKERFILE.API (MED BÅDA PAKETEN)
+# 7. UPPDATERA DOCKERFILE.API
 # ------------------------------
-Write-Host "6️⃣ Uppdaterar Dockerfile.api med prometheus-client och psutil..." -ForegroundColor Yellow
+Write-Host "6️⃣ Uppdaterar Dockerfile.api..." -ForegroundColor Yellow
 
 $dockerfilePath = Join-Path $ProjectRoot "Dockerfile.api"
 $newDockerfile = @'
@@ -341,11 +395,11 @@ CMD ["uvicorn", "src.api.app:app", "--host", "0.0.0.0", "--port", "8000"]
 '@
 
 Set-Content -Path $dockerfilePath -Value $newDockerfile -Encoding UTF8
-Write-Host "  ✅ Dockerfile.api uppdaterad med prometheus-client och psutil" -ForegroundColor Green
+Write-Host "  ✅ Dockerfile.api uppdaterad" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 8. UPPDATERA DOCKER-COMPOSE.YML (SOM VANLIGT)
+# 8. UPPDATERA DOCKER-COMPOSE.YML
 # ------------------------------
 Write-Host "7️⃣ Uppdaterar docker-compose.yml..." -ForegroundColor Yellow
 
@@ -399,7 +453,7 @@ volumes:
 Write-Host ""
 
 # ------------------------------
-# 9. RENSA LOGG-PROBLEM (OFÖRÄNDRAT)
+# 9. RENSA LOGG-PROBLEM
 # ------------------------------
 Write-Host "8️⃣ Rensar eventuella logg-problem..." -ForegroundColor Yellow
 docker-compose down
@@ -416,7 +470,7 @@ Write-Host "  ✅ Ny logs-mapp skapad" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 10. BYGG OM API (OFÖRÄNDRAT)
+# 10. BYGG OM API
 # ------------------------------
 Write-Host "9️⃣ Bygger om API med nya paket (--no-cache)..." -ForegroundColor Yellow
 docker-compose build --no-cache api
@@ -424,7 +478,7 @@ Write-Host "  ✅ API byggt" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 11. STARTA ALLA CONTAINERS (OFÖRÄNDRAT)
+# 11. STARTA ALLA CONTAINERS
 # ------------------------------
 Write-Host "🔟 Startar alla containers..." -ForegroundColor Yellow
 docker-compose up -d
@@ -432,7 +486,7 @@ Write-Host "  ✅ Containers startade" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 12. INSTALLERA PAKET LOKALT (OFÖRÄNDRAT)
+# 12. INSTALLERA PAKET LOKALT
 # ------------------------------
 Write-Host "1️⃣1️⃣ Installerar paket lokalt (för VS Code)..." -ForegroundColor Yellow
 pip install prometheus-client psutil
@@ -440,7 +494,7 @@ Write-Host "  ✅ Paket installerade lokalt" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 13. SKAPA TEST-SKRIPT (OFÖRÄNDRAT)
+# 13. SKAPA TEST-SKRIPT
 # ------------------------------
 Write-Host "1️⃣2️⃣ Skapar test-monitoring.ps1..." -ForegroundColor Yellow
 
@@ -495,7 +549,7 @@ Write-Host "  ✅ test-monitoring.ps1 skapad" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 14. KLAR! (OFÖRÄNDRAT)
+# 14. KLAR!
 # ------------------------------
 Write-Host "==========================================================" -ForegroundColor Cyan
 Write-Host "✅ PROMETHEUS & GRAFANA SETUP KLAR!" -ForegroundColor Green
@@ -508,12 +562,10 @@ Write-Host "  • Metrics:    http://localhost:8000/metrics" -ForegroundColor Wh
 Write-Host ""
 Write-Host "📋 NYA METRICS DU KAN ÖVERVAKA:" -ForegroundColor Green
 Write-Host "  • Error rate (%) - Andel misslyckade anrop" -ForegroundColor White
-Write-Host "  • CPU Usage (%) - Processorns belastning (app_cpu_seconds_total)" -ForegroundColor White
-Write-Host "  • Memory Usage (MB) - Minnesanvändning (app_memory_bytes)" -ForegroundColor White
-Write-Host "  • Prediction Confidence - Modellens säkerhet (95:e percentil)" -ForegroundColor White
+Write-Host "  • CPU Usage (%) - Processorns belastning" -ForegroundColor White
+Write-Host "  • Memory Usage (MB) - Minnesanvändning" -ForegroundColor White
+Write-Host "  • Prediction Confidence - Modellens säkerhet" -ForegroundColor White
 Write-Host ""
-Write-Host "📋 NÄSTA STEG:" -ForegroundColor Green
-Write-Host "  1. Vänta 30 sekunder att allt startar" -ForegroundColor Yellow
-Write-Host "  2. Öppna Grafana och logga in (admin/admin)" -ForegroundColor Yellow
-Write-Host "  3. Importera nya dashboarden från grafana/dashboard.json" -ForegroundColor Yellow
-Write-Host "  4. Gör några anrop till API:et och se alla metrics!" -ForegroundColor Yellow
+Write-Host "📋 FÖR GITHUB ACTIONS:" -ForegroundColor Yellow
+Write-Host "  • Använd app_ci.py i CI-miljön (utan psutil)" -ForegroundColor White
+Write-Host "  • Uppdatera ci.yml att starta: uvicorn src.api.app_ci:app" -ForegroundColor White
