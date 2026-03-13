@@ -11,6 +11,7 @@ from prometheus_client import Counter, Histogram, generate_latest, REGISTRY
 from .models import PredictionRequest, PredictionResponse, HealthResponse
 from .utils import find_latest_model, prepare_features, get_threat_type
 
+# Grundläggande metrics (inga psutil-beroende)
 REQUEST_COUNT = Counter('http_requests_total', 'Totala antalet anrop', ['method', 'endpoint', 'status'])
 REQUEST_LATENCY = Histogram('http_request_duration_seconds', 'Svarstider i sekunder', ['method', 'endpoint'])
 PREDICTION_COUNT = Counter('predictions_total', 'Antal prediktioner', ['threat_type'])

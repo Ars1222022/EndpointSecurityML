@@ -1,93 +1,33 @@
 {
-  "dashboard": {
-    "title": "ML API Monitoring",
-    "timezone": "browser",
-    "panels": [
-      {
-        "id": 1,
-        "title": "Requests per second",
-        "type": "timeseries",
-        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
-        "targets": [
-          {
-            "expr": "rate(http_requests_total[1m])",
-            "legendFormat": "{{method}} {{endpoint}}"
-          }
-        ]
-      },
-      {
-        "id": 2,
-        "title": "Response time (ms)",
-        "type": "timeseries",
-        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
-        "targets": [
-          {
-            "expr": "rate(http_request_duration_seconds_sum[1m]) / rate(http_request_duration_seconds_count[1m]) * 1000",
-            "legendFormat": "average"
-          }
-        ]
-      },
-      {
-        "id": 3,
-        "title": "Predictions by type",
-        "type": "piechart",
-        "gridPos": {"h": 8, "w": 8, "x": 0, "y": 8},
-        "targets": [
-          {
-            "expr": "predictions_total",
-            "legendFormat": "{{threat_type}}"
-          }
-        ]
-      },
-      {
-        "id": 4,
-        "title": "Error rate (%)",
-        "type": "timeseries",
-        "gridPos": {"h": 8, "w": 8, "x": 8, "y": 8},
-        "targets": [
-          {
-            "expr": "rate(http_errors_total[1m]) / rate(http_requests_total[1m]) * 100",
-            "legendFormat": "errors"
-          }
-        ]
-      },
-      {
-        "id": 5,
-        "title": "CPU Usage (%)",
-        "type": "timeseries",
-        "gridPos": {"h": 8, "w": 8, "x": 16, "y": 8},
-        "targets": [
-          {
-            "expr": "rate(app_cpu_seconds_total[1m]) * 100",
-            "legendFormat": "CPU"
-          }
-        ]
-      },
-      {
-        "id": 6,
-        "title": "Memory Usage (MB)",
-        "type": "gauge",
-        "gridPos": {"h": 8, "w": 6, "x": 0, "y": 16},
-        "targets": [
-          {
-            "expr": "app_memory_bytes / 1024 / 1024",
-            "legendFormat": "memory"
-          }
-        ]
-      },
-      {
-        "id": 7,
-        "title": "Prediction Confidence",
-        "type": "heatmap",
-        "gridPos": {"h": 8, "w": 18, "x": 6, "y": 16},
-        "targets": [
-          {
-            "expr": "prediction_confidence_bucket",
-            "legendFormat": "confidence"
-          }
-        ]
-      }
-    ]
-  },
-  "overwrite": true
+  "title": "ML API Monitoring",
+  "panels": [
+    {
+      "title": "Requests per second",
+      "targets": [{"expr": "rate(http_requests_total[1m])"}]
+    },
+    {
+      "title": "Response time (ms)",
+      "targets": [{"expr": "rate(http_request_duration_seconds_sum[1m]) / rate(http_request_duration_seconds_count[1m]) * 1000"}]
+    },
+    {
+      "title": "Predictions by type",
+      "targets": [{"expr": "predictions_total"}]
+    },
+    {
+      "title": "Error rate (%)",
+      "targets": [{"expr": "rate(http_errors_total[1m]) / rate(http_requests_total[1m]) * 100"}]
+    },
+    {
+      "title": "CPU Usage (%)",
+      "targets": [{"expr": "rate(app_cpu_seconds_total[1m]) * 100"}]
+    },
+    {
+      "title": "Memory Usage (MB)",
+      "targets": [{"expr": "app_memory_bytes / 1024 / 1024"}]
+    },
+    {
+      "title": "Prediction Confidence (95th percentile)",
+      "targets": [{"expr": "histogram_quantile(0.95, sum(rate(prediction_confidence_bucket[5m])) by (le))"}]
+    }
+  ]
 }
