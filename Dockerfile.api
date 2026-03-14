@@ -5,8 +5,9 @@ RUN pip install --no-cache-dir numpy==1.23.5
 RUN pip install --no-cache-dir pandas==2.0.3
 RUN pip install --no-cache-dir scikit-learn==1.2.2 joblib==1.2.0
 RUN pip install --no-cache-dir fastapi==0.104.1 uvicorn[standard]==0.24.0 pydantic==2.5.0
-RUN pip install --no-cache-dir prometheus-client psutil
+RUN pip install --no-cache-dir prometheus-client psutil dill
 COPY . .
 RUN mkdir -p /app/models/production /app/src/api
 EXPOSE 8000
 CMD ["uvicorn", "src.api.app:app", "--host", "0.0.0.0", "--port", "8000"]
+
