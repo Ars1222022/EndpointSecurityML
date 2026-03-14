@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment-v2
+  labels:
+    app: endpoint-security-api
+    version: v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: endpoint-security-api
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: endpoint-security-api
+        version: v2
+    spec:
+      containers:
+      - name: api
+        image: endpointsecurity-api:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+        env:
+        - name: MODEL_VERSION
+          value: "v2"

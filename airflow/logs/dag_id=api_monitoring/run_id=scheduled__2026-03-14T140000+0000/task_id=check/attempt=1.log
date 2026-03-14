@@ -1,0 +1,13 @@
+[2026-03-14T15:00:01.600+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: api_monitoring.check scheduled__2026-03-14T14:00:00+00:00 [queued]>
+[2026-03-14T15:00:01.606+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: api_monitoring.check scheduled__2026-03-14T14:00:00+00:00 [queued]>
+[2026-03-14T15:00:01.607+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-03-14T15:00:01.616+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): check> on 2026-03-14 14:00:00+00:00
+[2026-03-14T15:00:01.624+0000] {standard_task_runner.py:60} INFO - Started process 96 to run task
+[2026-03-14T15:00:01.628+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'api_monitoring', 'check', 'scheduled__2026-03-14T14:00:00+00:00', '--job-id', '356', '--raw', '--subdir', 'DAGS_FOLDER/monitoring_dag.py', '--cfg-path', '/tmp/tmp6pd4k3qh']
+[2026-03-14T15:00:01.629+0000] {standard_task_runner.py:88} INFO - Job 356: Subtask check
+[2026-03-14T15:00:01.677+0000] {task_command.py:423} INFO - Running <TaskInstance: api_monitoring.check scheduled__2026-03-14T14:00:00+00:00 [running]> on host 160b30c4ba9b
+[2026-03-14T15:00:01.739+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='ml_team' AIRFLOW_CTX_DAG_ID='api_monitoring' AIRFLOW_CTX_TASK_ID='check' AIRFLOW_CTX_EXECUTION_DATE='2026-03-14T14:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-03-14T14:00:00+00:00'
+[2026-03-14T15:00:01.746+0000] {python.py:201} INFO - Done. Returned value was: OK
+[2026-03-14T15:00:01.762+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=api_monitoring, task_id=check, execution_date=20260314T140000, start_date=20260314T150001, end_date=20260314T150001
+[2026-03-14T15:00:01.800+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-03-14T15:00:01.812+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

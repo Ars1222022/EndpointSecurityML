@@ -66,7 +66,7 @@ Write-Host "  ✅ DVC initierat" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 6. SKAPA CACHE-MAPP (KORRIGERAT - INGA REMOTE-KOMMANDON)
+# 6. SKAPA CACHE-MAPP
 # ------------------------------
 Write-Host "5️⃣ Skapar cache-mapp..." -ForegroundColor Yellow
 $dvcCachePath = Join-Path $ProjectRoot "dvc_cache"
@@ -109,7 +109,7 @@ Write-Host "  ✅ export_to_csv.py skapad" -ForegroundColor Green
 Write-Host ""
 
 # ------------------------------
-# 8. SKAPA DVC-KOMMANDON (KORRIGERAT)
+# 8. SKAPA DVC-KOMMANDON
 # ------------------------------
 Write-Host "7️⃣ Skapar dvc-kommandon.ps1..." -ForegroundColor Yellow
 

@@ -1,14 +1,32 @@
 # Docker för EndpointSecurityML
 
-## Kom igång
-1. Starta Docker Desktop
-2. Kör: .\docker.ps1
-3. Välj 1 för att starta
-4. Öppna http://localhost:5000
+## Grundläggande kommandon
 
-## Kommandon
 | Kommando | Funktion |
 |----------|----------|
-| .\docker.ps1 | Meny |
-| docker-compose up --build -d | Starta |
-| docker-compose down | Stoppa |
+| `docker-compose up -d` | Starta alla tjänster i bakgrunden |
+| `docker-compose down` | Stoppa alla tjänster |
+| `docker-compose logs -f` | Följ loggar från alla tjänster |
+| `docker-compose build` | Bygg om alla images |
+| `docker ps` | Lista körande containers |
+
+## Tjänster och portar
+
+| Tjänst | Port | URL |
+|--------|------|-----|
+| API | 8000 | http://localhost:8000/docs |
+| MLflow | 5000 | http://localhost:5000 |
+| Grafana | 3000 | http://localhost:3000 |
+| Airflow | 8080 | http://localhost:8080 |
+| Prometheus | 9090 | http://localhost:9090 |
+
+## Felsökning
+
+```powershell
+# Se loggar för en specifik tjänst
+docker-compose logs api
+docker-compose logs mlflow
+docker-compose logs airflow-webserver
+
+# Starta om en tjänst
+docker-compose restart api
