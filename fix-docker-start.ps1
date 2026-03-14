@@ -25,10 +25,6 @@ Write-Host ""
 # ------------------------------
 Write-Host "2️⃣ Skapar temporär docker-compose utan Airflow..." -ForegroundColor Yellow
 
-# Läs backup-filen
-$composeContent = Get-Content "docker-compose.yml.backup" -Raw
-
-# Enklare metod: Plocka ut bara de tjänster vi vill ha
 $newCompose = @"
 services:
   postgres:
@@ -102,7 +98,6 @@ volumes:
   grafana_data:
 "@
 
-# Spara som ny docker-compose.yml
 $newCompose | Out-File "docker-compose.yml" -Encoding UTF8
 Write-Host "  ✅ Ny docker-compose.yml skapad (utan Airflow)" -ForegroundColor Green
 Write-Host ""
@@ -135,19 +130,54 @@ docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
 Write-Host ""
 
 # ------------------------------
-# 6. TESTA ATT ALLT FUNGERAR
+# 6. KONTROLLERA MODELLER
 # ------------------------------
-Write-Host "6️⃣ Testar tjänsterna..." -ForegroundColor Yellow
+Write-Host "6️⃣ Kontrollerar modeller..." -ForegroundColor Yellow
 
-# Testa API
+# Kolla om det finns modeller i production-mappen
+$modelCount = (Get-ChildItem "models/production/*.pkl" -ErrorAction SilentlyContinue).Count
+
+if ($modelCount -eq 0) {
+    Write-Host "  ⚠️ Inga modeller hittade! Tränar en ny..." -ForegroundColor Yellow
+    docker exec api python src/training/train_no_mlflow.py
+    Write-Host "  ✅ Modell tränad" -ForegroundColor Green
+    Write-Host "  ⚡ Startar om API för att ladda modellen..." -ForegroundColor Yellow
+    docker restart api
+    Start-Sleep -Seconds 5
+} else {
+    Write-Host "  ✅ $modelCount modeller hittade" -ForegroundColor Green
+}
+Write-Host ""
+
+# ------------------------------
+# 7. TESTA API MED MODELL
+# ------------------------------
+Write-Host "7️⃣ Testar API med modell..." -ForegroundColor Yellow
+
 try {
-    $apiHealth = Invoke-RestMethod -Uri "http://localhost:8000/health" -TimeoutSec 2 -ErrorAction SilentlyContinue
-    Write-Host "  ✅ API fungerar på port 8000" -ForegroundColor Green
+    $apiHealth = Invoke-RestMethod -Uri "http://localhost:8000/health" -TimeoutSec 5 -ErrorAction SilentlyContinue
+    
+    if ($apiHealth.model_loaded) {
+        Write-Host "  ✅ API fungerar - Modell laddad: $($apiHealth.model_version)" -ForegroundColor Green
+    } else {
+        Write-Host "  ⚠️ API fungerar men INGEN modell laddad!" -ForegroundColor Yellow
+        Write-Host "  Försöker starta om API..." -ForegroundColor Yellow
+        docker restart api
+        Start-Sleep -Seconds 5
+        $apiHealth = Invoke-RestMethod -Uri "http://localhost:8000/health" -TimeoutSec 5
+        if ($apiHealth.model_loaded) {
+            Write-Host "  ✅ Nu fungerar det! Modell: $($apiHealth.model_version)" -ForegroundColor Green
+        }
+    }
 } catch {
     Write-Host "  ⚠️ API svarar inte än - vänta lite" -ForegroundColor Yellow
 }
+Write-Host ""
 
-# Testa Prometheus
+# ------------------------------
+# 8. TESTA PROMETHEUS
+# ------------------------------
+Write-Host "8️⃣ Testar Prometheus..." -ForegroundColor Yellow
 try {
     $prom = Invoke-WebRequest -Uri "http://localhost:9090" -UseBasicParsing -TimeoutSec 2 -ErrorAction SilentlyContinue
     Write-Host "  ✅ Prometheus fungerar på port 9090" -ForegroundColor Green
@@ -155,7 +185,10 @@ try {
     Write-Host "  ⚠️ Prometheus svarar inte än" -ForegroundColor Yellow
 }
 
-# Testa Grafana
+# ------------------------------
+# 9. TESTA GRAFANA
+# ------------------------------
+Write-Host "9️⃣ Testar Grafana..." -ForegroundColor Yellow
 try {
     $grafana = Invoke-WebRequest -Uri "http://localhost:3000" -UseBasicParsing -TimeoutSec 2 -ErrorAction SilentlyContinue
     Write-Host "  ✅ Grafana fungerar på port 3000" -ForegroundColor Green
@@ -168,9 +201,18 @@ Write-Host "==========================================================" -Foregro
 Write-Host "✅ FIX KLAR!" -ForegroundColor Green
 Write-Host "==========================================================" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "📋 Nästa steg:" -ForegroundColor Yellow
-Write-Host "  .\test-monitoring.ps1     # Testa monitoring" -ForegroundColor White
+Write-Host "📋 DINA TJÄNSTER:" -ForegroundColor Yellow
+Write-Host "  • API:        http://localhost:8000/docs" -ForegroundColor White
+Write-Host "  • Prometheus: http://localhost:9090" -ForegroundColor White
+Write-Host "  • Grafana:    http://localhost:3000 (admin/admin)" -ForegroundColor White
+Write-Host "  • MLflow:     http://localhost:5000" -ForegroundColor White
+Write-Host ""
+Write-Host "📋 Nästa steg i Grafana:" -ForegroundColor Green
+Write-Host "  1. Logga in på http://localhost:3000 (admin/admin)" -ForegroundColor White
+Write-Host "  2. Lägg till Prometheus datakälla (http://prometheus:9090)" -ForegroundColor White
+Write-Host "  3. Importera dashboard från grafana/dashboard.json" -ForegroundColor White
+Write-Host "  4. Kör .\test-monitoring.ps1 för att verifiera" -ForegroundColor White
 Write-Host ""
 Write-Host "📋 Återställa Airflow när det är fixat:" -ForegroundColor Gray
 Write-Host "  Copy-Item docker-compose.yml.backup docker-compose.yml -Force" -ForegroundColor Gray
-Write-Host "  docker-compose up -d      # Starta allt inklusive Airflow" -ForegroundColor Gray
+Write-Host "  docker-compose up -d" -ForegroundColor Gray
