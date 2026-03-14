@@ -18,9 +18,10 @@ jobs:
           
       - name: Install dependencies
         run: |
-          pip install fastapi uvicorn httpx pytest
+          pip install --upgrade pip
+          pip install fastapi uvicorn httpx pytest requests
           pip install numpy pandas scikit-learn joblib
-          pip install prometheus-client  # psutil behövs inte i CI
+          pip install prometheus-client
           
       - name: Create directories
         run: |
@@ -97,4 +98,6 @@ jobs:
               assert data["prediction"] == 1
               assert data["threat_type"] == "Attack"
           EOF
+          # Installera requests om det inte redan gjorts
+          pip install requests
           pytest tests/ -v
