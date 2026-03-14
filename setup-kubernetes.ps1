@@ -8,6 +8,7 @@
 # 4. Distribuerar i rätt ordning (deployment -> service -> hpa)
 # 5. Testar att allt fungerar
 # 6. Kontrollerar och installerar Airflow om det saknas
+# 7. Uppdaterar ci.yml med korrekt CI-konfiguration
 # =====================================================
 
 Write-Host "==========================================================" -ForegroundColor Cyan
@@ -317,9 +318,127 @@ if ($airflowRunning) {
 Write-Host ""
 
 # ------------------------------
-# 17. SKAPA HJÄLPSKRIPT
+# 17. UPPDATERA CI.YML MED KORREKT KONFIGURATION
 # ------------------------------
-Write-Host "1️⃣4️⃣ Skapar hjälpskript..." -ForegroundColor Yellow
+Write-Host "1️⃣4️⃣ Uppdaterar ci.yml för GitHub Actions..." -ForegroundColor Yellow
+
+$ciPath = ".github/workflows/ci.yml"
+New-Item -ItemType Directory -Path ".github/workflows" -Force | Out-Null
+
+$newCiYml = @'
+name: CI - Build and Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install fastapi uvicorn httpx pytest requests
+          pip install numpy pandas scikit-learn joblib
+          pip install prometheus-client
+          
+      - name: Create directories
+        run: |
+          mkdir -p data/raw
+          mkdir -p models/production
+          
+      - name: Create test model
+        run: |
+          python -c '
+          import pandas as pd
+          import numpy as np
+          from sklearn.ensemble import RandomForestClassifier
+          import joblib
+          import os
+          from datetime import datetime
+
+          X_train = np.array([[0,0], [1,1], [0,0], [1,1]])
+          y_train = np.array([0,1,0,1])
+          model = RandomForestClassifier(n_estimators=10, random_state=42)
+          model.fit(X_train, y_train)
+
+          timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+          model_path = f"models/production/endpoint_model_{timestamp}.pkl"
+          joblib.dump(model, model_path)
+          print(f"✅ Modell sparad: {model_path}")
+          '
+          
+      - name: Start API (CI-version)
+        run: |
+          # Använd app_ci.py som inte kräver psutil eller externa tjänster
+          uvicorn src.api.app_ci:app --host 0.0.0.0 --port 8000 &
+          sleep 5
+          
+      - name: Test health endpoint
+        run: |
+          curl -f http://localhost:8000/health || exit 1
+          
+      - name: Run tests
+        run: |
+          # Skapa en enkel testfil om den inte finns
+          mkdir -p tests
+          cat > tests/test_api.py << 'EOF'
+import requests
+import time
+
+BASE_URL = "http://localhost:8000"
+
+def test_health():
+    """Testa att health endpoint fungerar"""
+    response = requests.get(f"{BASE_URL}/health")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "ok"
+
+def test_predict_normal():
+    """Testa prediktion med normal process"""
+    response = requests.post(
+        f"{BASE_URL}/predict",
+        json={"NetworkConnections": 0, "ProcessName": "notepad.exe"}
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert data["prediction"] == 0
+    assert data["threat_type"] == "Normal"
+
+def test_predict_attack():
+    """Testa prediktion med misstänkt process"""
+    response = requests.post(
+        f"{BASE_URL}/predict",
+        json={"NetworkConnections": 1, "ProcessName": "powershell.exe"}
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert data["prediction"] == 1
+    assert data["threat_type"] == "Attack"
+EOF
+          # Installera requests om det inte redan gjorts
+          pip install requests
+          pytest tests/ -v
+'@
+
+Set-Content -Path $ciPath -Value $newCiYml -Encoding UTF8
+Write-Host "  ✅ ci.yml uppdaterad för GitHub Actions" -ForegroundColor Green
+Write-Host ""
+
+# ------------------------------
+# 18. SKAPA HJÄLPSKRIPT
+# ------------------------------
+Write-Host "1️⃣5️⃣ Skapar hjälpskript..." -ForegroundColor Yellow
 
 # deploy-to-k8s.ps1 (med rätt ordning)
 @"
@@ -353,7 +472,7 @@ Write-Host "  ✅ deploy-to-k8s.ps1 skapad" -ForegroundColor Green
 Write-Host "  ✅ test-k8s.ps1 skapad" -ForegroundColor Green
 
 # ------------------------------
-# 18. SLUTSTATUS FÖR ALLA SYSTEM
+# 19. SLUTSTATUS FÖR ALLA SYSTEM
 # ------------------------------
 Write-Host ""
 Write-Host "==========================================================" -ForegroundColor Cyan
@@ -379,8 +498,13 @@ Write-Host "  • Grafana: http://localhost:3000 (admin/admin)" -ForegroundColor
 Write-Host "  • Prometheus: http://localhost:9090" -ForegroundColor White
 Write-Host "  • MLflow: http://localhost:5000" -ForegroundColor White
 Write-Host ""
+Write-Host "📋 CI/CD STATUS:" -ForegroundColor Yellow
+Write-Host "  • ci.yml har uppdaterats med korrekt konfiguration" -ForegroundColor White
+Write-Host "  • Nästa push till GitHub kommer att köra tester" -ForegroundColor White
+Write-Host ""
 Write-Host "📋 TESTA NU:" -ForegroundColor Green
 Write-Host "  curl http://localhost:8000/health                     # Testa API" -ForegroundColor White
 Write-Host "  kubectl get pods                                     # Se Kubernetes poddar" -ForegroundColor White
 Write-Host "  http://localhost:8080                               # Airflow UI" -ForegroundColor White
 Write-Host "  http://localhost:3000                               # Grafana" -ForegroundColor White
+Write-Host "  git add . && git commit -m 'Update ci.yml' && git push  # Uppdatera GitHub Actions" -ForegroundColor White
