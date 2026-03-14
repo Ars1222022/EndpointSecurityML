@@ -64,40 +64,40 @@ jobs:
           # Skapa en enkel testfil om den inte finns
           mkdir -p tests
           cat > tests/test_api.py << 'EOF'
-import requests
-import time
+          import requests
+          import time
 
-BASE_URL = "http://localhost:8000"
+          BASE_URL = "http://localhost:8000"
 
-def test_health():
-    """Testa att health endpoint fungerar"""
-    response = requests.get(f"{BASE_URL}/health")
-    assert response.status_code == 200
-    data = response.json()
-    assert data["status"] == "ok"
+          def test_health():
+              """Testa att health endpoint fungerar"""
+              response = requests.get(f"{BASE_URL}/health")
+              assert response.status_code == 200
+              data = response.json()
+              assert data["status"] == "ok"
 
-def test_predict_normal():
-    """Testa prediktion med normal process"""
-    response = requests.post(
-        f"{BASE_URL}/predict",
-        json={"NetworkConnections": 0, "ProcessName": "notepad.exe"}
-    )
-    assert response.status_code == 200
-    data = response.json()
-    assert data["prediction"] == 0
-    assert data["threat_type"] == "Normal"
+          def test_predict_normal():
+              """Testa prediktion med normal process"""
+              response = requests.post(
+                  f"{BASE_URL}/predict",
+                  json={"NetworkConnections": 0, "ProcessName": "notepad.exe"}
+              )
+              assert response.status_code == 200
+              data = response.json()
+              assert data["prediction"] == 0
+              assert data["threat_type"] == "Normal"
 
-def test_predict_attack():
-    """Testa prediktion med misstänkt process"""
-    response = requests.post(
-        f"{BASE_URL}/predict",
-        json={"NetworkConnections": 1, "ProcessName": "powershell.exe"}
-    )
-    assert response.status_code == 200
-    data = response.json()
-    assert data["prediction"] == 1
-    assert data["threat_type"] == "Attack"
-EOF
+          def test_predict_attack():
+              """Testa prediktion med misstänkt process"""
+              response = requests.post(
+                  f"{BASE_URL}/predict",
+                  json={"NetworkConnections": 1, "ProcessName": "powershell.exe"}
+              )
+              assert response.status_code == 200
+              data = response.json()
+              assert data["prediction"] == 1
+              assert data["threat_type"] == "Attack"
+          EOF
           # Installera requests om det inte redan gjorts
           pip install requests
           pytest tests/ -v
