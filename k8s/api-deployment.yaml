@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+  labels:
+    app: endpoint-security-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: endpoint-security-api
+  template:
+    metadata:
+      labels:
+        app: endpoint-security-api
+    spec:
+      containers:
+      - name: api
+        image: endpointsecurity-api:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000

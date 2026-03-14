@@ -1,0 +1,5 @@
+FROM apache/airflow:2.8.1
+USER root
+RUN mkdir -p /home/airflow/.local && chown -R airflow:airflow /home/airflow/.local
+USER airflow
+RUN pip install --user --no-cache-dir scikit-learn==1.2.2 pandas==2.0.3 numpy==1.23.5 joblib==1.2.0 requests

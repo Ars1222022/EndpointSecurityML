@@ -1,12 +1,6 @@
-*.mdf
-*.ldf
-*.bak
-*.log
+airflow/logs/
+.git/
 __pycache__/
 *.pyc
-.git
-.gitignore
-.vscode
-.idea
-mlruns/
-data/raw/*.csv
+.env
+.venv
