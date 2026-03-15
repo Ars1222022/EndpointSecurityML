@@ -1,3 +1,20 @@
+# =====================================================
+# create-docker-compose.ps1 - Skapar komplett docker-compose.yml
+# =====================================================
+
+Write-Host "==========================================================" -ForegroundColor Cyan
+Write-Host "🐳 SKAPAR KOMPLETT DOCKER-COMPOSE.YML (MED MONITORING)" -ForegroundColor Cyan
+Write-Host "==========================================================" -ForegroundColor Cyan
+Write-Host ""
+
+# 1. Skapa backup om filen redan finns
+if (Test-Path "docker-compose.yml") {
+    Copy-Item "docker-compose.yml" "docker-compose.yml.backup.$(Get-Date -Format 'yyyyMMdd_HHmmss')" -Force
+    Write-Host "✅ Backup skapad av befintlig docker-compose.yml" -ForegroundColor Green
+}
+
+# 2. Definiera innehållet
+$composeContent = @'
 version: '3.8'
 services:
   postgres:
@@ -17,7 +34,7 @@ services:
       test: ["CMD", "redis-cli", "ping"]
 
   airflow-webserver:
-    image: airflow-custom:latest
+    image: apache/airflow:2.8.1
     command: webserver
     ports:
       - "8080:8080"
@@ -27,7 +44,7 @@ services:
       AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://airflow:airflow@postgres/airflow
       AIRFLOW__CELERY__BROKER_URL: redis://redis:6379/0
       AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
-     
+      _PIP_ADDITIONAL_REQUIREMENTS: "scikit-learn==1.2.2 pandas==2.0.3 numpy==1.23.5 joblib==1.2.0 requests"
     volumes:
       - ./airflow/dags:/opt/airflow/dags
       - ./airflow/logs:/opt/airflow/logs
@@ -41,7 +58,7 @@ services:
         condition: service_healthy
 
   airflow-scheduler:
-    image: airflow-custom:latest
+    image: apache/airflow:2.8.1
     command: scheduler
     environment:
       AIRFLOW__CORE__EXECUTOR: CeleryExecutor
@@ -63,7 +80,7 @@ services:
         condition: service_healthy
 
   airflow-worker:
-    image: airflow-custom:latest
+    image: apache/airflow:2.8.1
     command: celery worker
     environment:
       AIRFLOW__CORE__EXECUTOR: CeleryExecutor
@@ -137,8 +154,33 @@ services:
 volumes:
   postgres_data:
   grafana_data:
+'@
 
+# 3. Spara filen
+$composeContent | Out-File -FilePath "docker-compose.yml" -Encoding UTF8
 
-
-
-
+Write-Host "✅ docker-compose.yml har skapats!" -ForegroundColor Green
+Write-Host ""
+Write-Host "📋 TJÄNSTER SOM INGÅR:" -ForegroundColor Cyan
+Write-Host "  • postgres (databas för Airflow)" -ForegroundColor White
+Write-Host "  • redis (cache för Airflow)" -ForegroundColor White
+Write-Host "  • airflow-webserver (port 8080)" -ForegroundColor White
+Write-Host "  • airflow-scheduler" -ForegroundColor White
+Write-Host "  • airflow-worker" -ForegroundColor White
+Write-Host "  • mlflow (port 5000)" -ForegroundColor White
+Write-Host "  • api (port 8000)" -ForegroundColor White
+Write-Host "  • prometheus (port 9090)" -ForegroundColor Green
+Write-Host "  • grafana (port 3000)" -ForegroundColor Green
+Write-Host ""
+Write-Host "📋 KOMMANDON:" -ForegroundColor Yellow
+Write-Host "  docker-compose up -d      # Starta ALLA tjänster" -ForegroundColor White
+Write-Host "  docker-compose stop       # Stoppa ALLA tjänster" -ForegroundColor White
+Write-Host "  docker-compose down       # Stoppa och ta bort ALLA containers" -ForegroundColor White
+Write-Host "  docker-compose logs -f    # Se loggar från ALLA tjänster" -ForegroundColor White
+Write-Host ""
+Write-Host "📋 TESTA:" -ForegroundColor Green
+Write-Host "  curl http://localhost:8000/health    # API" -ForegroundColor White
+Write-Host "  http://localhost:5000                # MLflow" -ForegroundColor White
+Write-Host "  http://localhost:8080                # Airflow (admin/admin)" -ForegroundColor White
+Write-Host "  http://localhost:3000                # Grafana (admin/admin)" -ForegroundColor White
+Write-Host "  http://localhost:9090                # Prometheus" -ForegroundColor White
